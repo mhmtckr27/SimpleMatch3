@@ -1,0 +1,21 @@
+{
+    "name": "SimpleMatch3.Board.Manager",
+    "rootNamespace": "",
+    "references": [
+        "GUID:0d8beb7f090555447a6cf5ce9e54dbb4",
+        "GUID:c04663b406d6c724c9ef657a4d1afdfb",
+        "GUID:31dbc5f9e3769c041a009945f0d0ff02",
+        "GUID:d525ad6bd40672747bde77962f1c401e",
+        "GUID:6f54468eced0e214d977e697d701579d",
+        "GUID:b4a9457925fa4bfe9efbe96d2279e049"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

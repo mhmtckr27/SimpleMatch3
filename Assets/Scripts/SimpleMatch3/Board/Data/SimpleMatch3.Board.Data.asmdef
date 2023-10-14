@@ -1,0 +1,16 @@
+{
+    "name": "SimpleMatch3.Board.Data",
+    "rootNamespace": "",
+    "references": [
+        "GUID:6f54468eced0e214d977e697d701579d"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

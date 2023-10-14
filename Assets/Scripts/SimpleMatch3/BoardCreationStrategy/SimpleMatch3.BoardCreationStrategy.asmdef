@@ -1,0 +1,22 @@
+{
+    "name": "SimpleMatch3.BoardCreationStrategy",
+    "rootNamespace": "",
+    "references": [
+        "GUID:0d8beb7f090555447a6cf5ce9e54dbb4",
+        "GUID:ba48e18d304264c4b89447859734b90b",
+        "GUID:31dbc5f9e3769c041a009945f0d0ff02",
+        "GUID:6f54468eced0e214d977e697d701579d",
+        "GUID:63d83ea710b08cc47a1d4abbbd35cc43",
+        "GUID:c10f946c6cb9eee4aa7e3cebaa72deae",
+        "GUID:b4a9457925fa4bfe9efbe96d2279e049"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
