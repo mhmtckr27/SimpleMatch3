@@ -2,20 +2,32 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a582bd79-73ec-4cd0-883d-a3742ed20c6d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Data.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Data/BoardData.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Data/BoardData.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Data/SimpleMatch3.Board.Data.asmdef" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Data/SimpleMatch3.Board.Data.asmdef.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/BoardCreationStrategy/PresetBoardCreationStrategy.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/BoardCreationStrategy/PresetBoardCreationStrategy.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Extensions/ListExtensions.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Extensions/ListExtensions.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Zenject.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/EventInterfaces.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/EventInterfaces/ISwiped.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/EventInterfaces/ISwiped.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Extensions/VectorExtensions.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Extensions/VectorExtensions.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Managers.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Managers/InputManager.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Managers/InputManager.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Zenject/SignalsInstaller.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Zenject/SignalsInstaller.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SimpleMatch3/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SimpleMatch3/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Drop_Blue.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Drop_Blue.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Drop_Green.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Drop_Green.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Drop_Red.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Drop_Red.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Drop_Yellow.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Drop_Yellow.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Tile.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Tile.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/IBoardFactory.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/IBoardFactory.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Board.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Board.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Manager/BoardManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Manager/BoardManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/SimpleMatch3.Board.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/SimpleMatch3.Board.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/BoardCreationStrategy/BoardCreationStrategyBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/BoardCreationStrategy/BoardCreationStrategyBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/BoardCreationStrategy/PresetBoardCreationStrategy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/BoardCreationStrategy/PresetBoardCreationStrategy.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/BoardCreationStrategy/RandomBoardCreationStrategy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/BoardCreationStrategy/RandomBoardCreationStrategy.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Tile/SimpleMatch3.Tile.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Tile/SimpleMatch3.Tile.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Tile/Tile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Tile/Tile.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +93,9 @@
       <workItem from="1697228515082" duration="773000" />
       <workItem from="1697278354249" duration="1232000" />
       <workItem from="1697280514253" duration="113000" />
-      <workItem from="1697280671379" duration="6886000" />
+      <workItem from="1697280671379" duration="14576000" />
+      <workItem from="1697316696648" duration="1032000" />
+      <workItem from="1697363767343" duration="2719000" />
     </task>
     <servers />
   </component>

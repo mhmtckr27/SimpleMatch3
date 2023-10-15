@@ -10,11 +10,10 @@ namespace SimpleMatch3.BoardFactory
 {
     public class RandomBoardCreationStrategy : BoardCreationStrategyBase
     {
-        public RandomBoardCreationStrategy(IInstantiator instantiator, GameObject tilePrefab, Transform boardManager,
-            Dictionary<DropColor, GameObject> dropPrefabs) : base(instantiator, tilePrefab, boardManager, dropPrefabs)
+        public RandomBoardCreationStrategy(BoardCreationStrategyData data) : base(data)
         {
         }
-
+        
         protected override Drop.Drop CreateDrop(Board.Board board, BoardData boardData, Tile.Tile tile)
         {
             //We must only check left and down tiles because we start spawning from bottom left.
@@ -27,11 +26,14 @@ namespace SimpleMatch3.BoardFactory
             var exclusionList = GetDropColorExclusionList(directions, board, tile);
 
             var color = Helpers.RandomEnum(exclusionList);
-            var foundPrefab = DropPrefabs.TryGetValue(color, out var prefab);
+            var foundPrefab = Data.DropPrefabs.TryGetValue(color, out var prefab);
 
-            if (foundPrefab) 
-                return instantiator.InstantiatePrefab(prefab).GetComponent<Drop.Drop>();
-            
+            if (foundPrefab)
+            {
+                var drop = Data.Instantiator.InstantiatePrefab(prefab, Data.DropsParent).GetComponent<Drop.Drop>();
+                drop.name = $"Drop_{color}";
+                return drop;
+            }            
             Debug.LogError($"Could not find drop prefab with given color: {color}");
             return null;
         }

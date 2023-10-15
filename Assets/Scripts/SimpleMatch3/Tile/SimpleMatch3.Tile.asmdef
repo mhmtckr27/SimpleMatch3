@@ -2,7 +2,8 @@
     "name": "SimpleMatch3.Tile",
     "rootNamespace": "",
     "references": [
-        "GUID:6f54468eced0e214d977e697d701579d"
+        "GUID:6f54468eced0e214d977e697d701579d",
+        "GUID:c10f946c6cb9eee4aa7e3cebaa72deae"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

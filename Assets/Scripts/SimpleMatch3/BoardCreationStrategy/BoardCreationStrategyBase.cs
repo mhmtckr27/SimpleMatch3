@@ -8,23 +8,16 @@ namespace SimpleMatch3.BoardFactory
 {
     public abstract class BoardCreationStrategyBase : IBoardCreationStrategy
     {
-        private readonly GameObject _tilePrefab;
-        protected readonly Dictionary<DropColor, GameObject> DropPrefabs;
-        protected readonly IInstantiator instantiator;
-        private readonly Transform _boardManager;
+        protected readonly BoardCreationStrategyData Data;
 
-        public BoardCreationStrategyBase(IInstantiator instantiator, GameObject tilePrefab, Transform boardManager,
-            Dictionary<DropColor, GameObject> dropPrefabs)
+        protected BoardCreationStrategyBase(BoardCreationStrategyData data)
         {
-            this.instantiator = instantiator;
-            _tilePrefab = tilePrefab;
-            _boardManager = boardManager;
-            DropPrefabs = dropPrefabs;
+            Data = data;
         }
         
         public virtual Board.Board CreateBoard(BoardData boardData)
         {
-            var board = new Board.Board(boardData);
+            var board = Data.Instantiator.Instantiate<Board.Board>(new object[] {boardData, Data.SignalBus});
             
             for (var colIndex = 0; colIndex < boardData.ColumnCount; colIndex++)
             {
@@ -49,12 +42,23 @@ namespace SimpleMatch3.BoardFactory
 
         private Tile.Tile CreateTile(BoardData boardData, TileData tileData)
         {
-            var tile = instantiator.InstantiatePrefab(_tilePrefab, _boardManager).GetComponent<Tile.Tile>();
+            var tile = Data.Instantiator.InstantiatePrefab(Data.TilePrefab, Data.TilesParent).GetComponent<Tile.Tile>();
+            tile.name = $"Tile_{tileData.Coordinates}";
             tile.transform.localPosition = new Vector3(tileData.Coordinates.x, tileData.Coordinates.y);
             tile.Data = tileData;
             return tile;
         }
 
         protected abstract Drop.Drop CreateDrop(Board.Board board, BoardData boardData, Tile.Tile tile);
+    }
+    
+    public class BoardCreationStrategyData
+    {
+        public IInstantiator Instantiator;
+        public SignalBus SignalBus;
+        public GameObject TilePrefab;
+        public Transform TilesParent;
+        public Transform DropsParent;
+        public Dictionary<DropColor, GameObject> DropPrefabs;
     }
 }

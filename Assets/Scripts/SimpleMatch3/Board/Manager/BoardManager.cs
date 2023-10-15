@@ -17,20 +17,48 @@ namespace SimpleMatch3.Board.Manager
 
         private Board _board;
         private IInstantiator _instantiator;
+        private SignalBus _signalBus;
 
         [Inject]
-        private void Construct(IInstantiator instantiator)
+        private void Construct(IInstantiator instantiator, SignalBus signalBus)
         {
             _instantiator = instantiator;
+            _signalBus = signalBus;
         }
         
         private void Awake()
         {
             AdjustBoardPosition();
             FitBoardInCamera();
+            var tilesParent = CreateTilesParent();
+            var dropsParent = CreateDropsParent();
+
+            var strategyData = new BoardCreationStrategyData()
+            {
+                Instantiator = _instantiator,
+                SignalBus = _signalBus,
+                DropPrefabs = dropPrefabs,
+                DropsParent = dropsParent,
+                TilePrefab = tilePrefab,
+                TilesParent = tilesParent
+            };
             
-            IBoardCreationStrategy boardCreationStrategy = new RandomBoardCreationStrategy(_instantiator, tilePrefab, transform, dropPrefabs);
+            IBoardCreationStrategy boardCreationStrategy = new RandomBoardCreationStrategy(strategyData);
             _board = boardCreationStrategy.CreateBoard(boardData);
+        }
+
+        private Transform CreateDropsParent()
+        {
+            var dropsParent = new GameObject("Drops").transform;
+            dropsParent.SetParent(transform, false);
+            return dropsParent;
+        }
+
+        private Transform CreateTilesParent()
+        {
+            var tilesParent = new GameObject("Tiles").transform;
+            tilesParent.SetParent(transform, false);
+            return tilesParent;
         }
 
         private void AdjustBoardPosition()
