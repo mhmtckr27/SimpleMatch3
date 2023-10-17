@@ -1,0 +1,17 @@
+{
+    "name": "SimpleMatch3.Matching.Matches",
+    "rootNamespace": "",
+    "references": [
+        "GUID:ba48e18d304264c4b89447859734b90b",
+        "GUID:06df1871201bc8f4b92f09c8d4679f64"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

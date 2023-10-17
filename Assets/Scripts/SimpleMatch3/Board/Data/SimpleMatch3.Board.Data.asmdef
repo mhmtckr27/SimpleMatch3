@@ -2,6 +2,7 @@
     "name": "SimpleMatch3.Board.Data",
     "rootNamespace": "",
     "references": [
+        "GUID:d525ad6bd40672747bde77962f1c401e",
         "GUID:6f54468eced0e214d977e697d701579d"
     ],
     "includePlatforms": [],

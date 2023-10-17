@@ -8,6 +8,6 @@ namespace SimpleMatch3.BoardFactory
 {
     public interface IBoardCreationStrategy
     {
-        public Board.Board CreateBoard(BoardData boardData);
+        public Board.Board CreateBoard(BoardCreationData boardCreationData);
     }
 }

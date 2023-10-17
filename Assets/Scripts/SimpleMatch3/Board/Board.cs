@@ -1,63 +1,66 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using SimpleMatch3.Board.Data;
-using SimpleMatch3.EventInterfaces;
 using UnityEngine;
-using Zenject;
 
 namespace SimpleMatch3.Board
 {
-    [Serializable]
     public class Board
     {
-        [field: SerializeField] public BoardData BoardData { get; private set; }
         private Dictionary<Vector2Int, Tile.Tile> _tiles = new();
-        
-        private readonly SignalBus _signalBus;
+        public readonly BoardCreationData BoardData;
 
-        public Board(BoardData boardData, SignalBus signalBus)
+        public Board(BoardCreationData boardData)
         {
             BoardData = boardData;
-            _signalBus = signalBus;
-            
-            _signalBus.Subscribe<ISwiped.OnSwiped>(OnSwiped);
         }
-
-        private void OnSwiped(ISwiped.OnSwiped data)
-        {
-            if(!TileExists(data.InputDownTileCoords, out var swipedTile))
-                return;
-            
-            if(swipedTile.IsBusy)
-                return;
-            
-            if(!TileExists(data.InputDownTileCoords + data.SwipeDirection, out var tile))
-            {
-                swipedTile.PlaySwipeNotAllowedAnim(data.SwipeDirection);
-                return;
-            }        
-            
-            if(tile.IsBusy)
-                return;
-            
-            swipedTile.PlaySwipeWithoutExplosionAnim(data.SwipeDirection, tile);
-            tile.PlaySwipeWithoutExplosionAnim(-data.SwipeDirection, swipedTile);
-            
-        }
-
+        
         public void AddTile(Vector2Int coords, Tile.Tile tile)
         {
-            if(_tiles.ContainsKey(coords))
-                return;
-            
-            _tiles.Add(coords, tile);
+            if(!_tiles.ContainsKey(coords))
+                _tiles.Add(coords, tile);
         }
 
         public bool TileExists(Vector2Int coords, out Tile.Tile tile)
         {
             return _tiles.TryGetValue(coords, out tile);
         }
-        
-        
+
+        public bool GetUpperTiles(Vector2Int startFrom, out  List<Tile.Tile> upperTiles)
+        {
+            upperTiles = new List<Tile.Tile>();
+            
+            if (!TileExists(startFrom, out var startTile))
+                return false;
+            
+            for (var i = 1; i < BoardData.RowCount; i++)
+            {
+                if(!TileExists(startFrom + Vector2Int.up * i, out var tile))
+                    continue;
+
+                upperTiles.Add(tile);
+            }
+
+            return true;
+        }
+
+        public List<List<Tile.Tile>> GetAllUpperTilesGroupedByColumns(List<Tile.Tile> tiles)
+        {
+            var allUpperTiles = new List<List<Tile.Tile>>();
+
+            var groupedByColumnIndices = tiles.Select(t => t.Data.Coordinates).GroupBy(coord => coord.x);
+
+            foreach (var group in groupedByColumnIndices)
+            {
+                var bottomMostCoords = new Vector2Int(group.Key, group.Min(coord => coord.y));
+
+                if(!GetUpperTiles(bottomMostCoords, out var upperTiles))
+                    continue;
+                
+                allUpperTiles.Add(upperTiles);
+            }
+
+            return allUpperTiles;
+        }
     }
 }

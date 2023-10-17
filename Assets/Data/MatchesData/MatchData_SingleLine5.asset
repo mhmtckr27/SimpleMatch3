@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b122a39f95f04c6cbf3d6dbe0b50d88f, type: 3}
+  m_Name: MatchData_SingleLine5
+  m_EditorClassIdentifier: 
+  <ParticipantCount>k__BackingField: 5
+  <Priority>k__BackingField: 0
+  <MatchesCoordinateOffsets>k__BackingField:
+  - Offsets:
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 0, y: 2}
+    - {x: 0, y: 3}
+    - {x: 0, y: 4}
+  - Offsets:
+    - {x: 0, y: -1}
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 0, y: 2}
+    - {x: 0, y: 3}
+  - Offsets:
+    - {x: 0, y: -2}
+    - {x: 0, y: -1}
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+    - {x: 0, y: 2}
+  - Offsets:
+    - {x: 0, y: -3}
+    - {x: 0, y: -2}
+    - {x: 0, y: -1}
+    - {x: 0, y: 0}
+    - {x: 0, y: 1}
+  - Offsets:
+    - {x: 0, y: -4}
+    - {x: 0, y: -3}
+    - {x: 0, y: -2}
+    - {x: 0, y: -1}
+    - {x: 0, y: 0}
+  - Offsets:
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 2, y: 0}
+    - {x: 3, y: 0}
+    - {x: 4, y: 0}
+  - Offsets:
+    - {x: -1, y: 0}
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 2, y: 0}
+    - {x: 3, y: 0}
+  - Offsets:
+    - {x: -2, y: 0}
+    - {x: -1, y: 0}
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+    - {x: 2, y: 0}
+  - Offsets:
+    - {x: -3, y: 0}
+    - {x: -2, y: 0}
+    - {x: -1, y: 0}
+    - {x: 0, y: 0}
+    - {x: 1, y: 0}
+  - Offsets:
+    - {x: -4, y: 0}
+    - {x: -3, y: 0}
+    - {x: -2, y: 0}
+    - {x: -1, y: 0}
+    - {x: 0, y: 0}

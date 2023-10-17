@@ -66,5 +66,12 @@ namespace SimpleMatch3.Extensions
         {
             return vector2Int.x != 0 ? Mathf.Sign(vector2Int.x) : Mathf.Sign(vector2Int.y);
         }
+
+        public static bool Approximately(this Vector3 vector3, Vector3 toCompare)
+        {
+            return Mathf.Approximately(vector3.x, toCompare.x) && 
+                   Mathf.Approximately(vector3.y, toCompare.y) &&
+                   Mathf.Approximately(vector3.z, toCompare.z);
+        }
     }
 }

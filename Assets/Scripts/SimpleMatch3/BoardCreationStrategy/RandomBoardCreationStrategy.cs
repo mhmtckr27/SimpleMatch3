@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using SimpleMatch3.Board.Data;
+using SimpleMatch3.BoardFactory;
 using SimpleMatch3.Drop;
 using SimpleMatch3.Extensions;
 using SimpleMatch3.Util;
 using UnityEngine;
-using Zenject;
 
-namespace SimpleMatch3.BoardFactory
+namespace SimpleMatch3.BoardCreationStrategy
 {
     public class RandomBoardCreationStrategy : BoardCreationStrategyBase
     {
@@ -14,7 +14,7 @@ namespace SimpleMatch3.BoardFactory
         {
         }
         
-        protected override Drop.Drop CreateDrop(Board.Board board, BoardData boardData, Tile.Tile tile)
+        protected override Drop.Drop CreateDrop(Board.Board board, BoardCreationData boardCreationData, Tile.Tile tile)
         {
             //We must only check left and down tiles because we start spawning from bottom left.
             var directions = new List<Vector2Int>()
@@ -31,6 +31,7 @@ namespace SimpleMatch3.BoardFactory
             if (foundPrefab)
             {
                 var drop = Data.Instantiator.InstantiatePrefab(prefab, Data.DropsParent).GetComponent<Drop.Drop>();
+                drop.CurrentTileCoords = tile.Data.Coordinates;
                 drop.name = $"Drop_{color}";
                 return drop;
             }            

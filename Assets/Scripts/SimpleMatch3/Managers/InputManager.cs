@@ -65,7 +65,7 @@ namespace SimpleMatch3.Managers
                     SwipeDirection = _swipeDirection
                 });
                 
-                Debug.LogError("Swipe Direction : " + _swipeDirection);
+                // Debug.LogError("Swipe Direction : " + _swipeDirection);
                 _canSwipe = false;
             }
         }

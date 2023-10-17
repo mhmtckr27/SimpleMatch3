@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Color: 40
+  CurrentTileCoords: {x: 0, y: 0}
 --- !u!1 &6319881239572287330
 GameObject:
   m_ObjectHideFlags: 0

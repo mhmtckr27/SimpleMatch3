@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-namespace SimpleMatch3
+namespace SimpleMatch3.Tile
 {
+    [Serializable]
     public class TileData
     {
         /// <summary>
@@ -9,12 +11,14 @@ namespace SimpleMatch3
         /// </summary>
         public Vector2Int Coordinates;
         public bool IsGeneratorTile;
+        public Generator.Generator Generator;
         public Drop.Drop CurrentDrop;
 
-        public TileData(Vector2Int coordinates, bool isGeneratorTile)
+        public TileData(Vector2Int coordinates, bool isGeneratorTile, Generator.Generator generator = null)
         {
             Coordinates = coordinates;
             IsGeneratorTile = isGeneratorTile;
+            Generator = generator;
         }
     }
 }

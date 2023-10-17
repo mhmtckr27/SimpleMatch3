@@ -1,3 +1,16 @@
 {
-	"name": "SimpleMatch3.Drop"
+    "name": "SimpleMatch3.Drop",
+    "rootNamespace": "",
+    "references": [
+        "GUID:c10f946c6cb9eee4aa7e3cebaa72deae"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

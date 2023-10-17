@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using SimpleMatch3.Board.Data;
 using SimpleMatch3.Drop;
+using SimpleMatch3.Generator;
+using SimpleMatch3.Tile;
 using UnityEngine;
 using Zenject;
 
@@ -15,32 +17,56 @@ namespace SimpleMatch3.BoardFactory
             Data = data;
         }
         
-        public virtual Board.Board CreateBoard(BoardData boardData)
+        public virtual Board.Board CreateBoard(BoardCreationData boardCreationData)
         {
-            var board = Data.Instantiator.Instantiate<Board.Board>(new object[] {boardData, Data.SignalBus});
+            var board = Data.Instantiator.Instantiate<Board.Board>(new object[] {boardCreationData});
+            var generators = new List<Generator.Generator>();
             
-            for (var colIndex = 0; colIndex < boardData.ColumnCount; colIndex++)
+            for (var colIndex = 0; colIndex < boardCreationData.ColumnCount; colIndex++)
             {
-                for (var rowIndex = 0; rowIndex < boardData.RowCount; rowIndex++)
+                for (var rowIndex = 0; rowIndex < boardCreationData.RowCount; rowIndex++)
                 {
                     var coords = new Vector2Int(colIndex, rowIndex);
                     
-                    if(boardData.TilesToSkip.Contains(coords))
+                    if(boardCreationData.TilesToSkip.Contains(coords))
                         continue;
                     
-                    var isGeneratorTile = boardData.GeneratorTiles.Contains(coords);
-                    var tile = CreateTile(boardData, new TileData(coords, isGeneratorTile));
-                    var drop = CreateDrop(board, boardData, tile);
+                    var isGeneratorTile = boardCreationData.GeneratorTiles.Contains(coords);
+                    Generator.Generator generator = null;
+                    if (isGeneratorTile)
+                        generator = CreateGenerator(board);
+                    var tile = CreateTile(new TileData(coords, isGeneratorTile, generator));
+                    var drop = CreateDrop(board, boardCreationData, tile);
+                    
+                    
                     drop.transform.position = tile.transform.position;
                     tile.SetDrop(drop);
                     board.AddTile(coords, tile);
                 }
             }
 
+            // foreach (var generator in generators)
+            // {
+            //     generator.Activate();
+            // }
+            
             return board;
         }
 
-        private Tile.Tile CreateTile(BoardData boardData, TileData tileData)
+        private Generator.Generator CreateGenerator(Board.Board board)
+        {
+            var generatorData = new GeneratorData()
+            {
+                Instantiator = Data.Instantiator,
+                SignalBus = Data.SignalBus,
+                DropPrefabs = Data.DropPrefabs,
+                DropsParent = Data.DropsParent
+            };
+            
+            return Data.Instantiator.Instantiate<Generator.Generator>(new object[] {generatorData});
+        }
+
+        private Tile.Tile CreateTile(TileData tileData)
         {
             var tile = Data.Instantiator.InstantiatePrefab(Data.TilePrefab, Data.TilesParent).GetComponent<Tile.Tile>();
             tile.name = $"Tile_{tileData.Coordinates}";
@@ -49,7 +75,7 @@ namespace SimpleMatch3.BoardFactory
             return tile;
         }
 
-        protected abstract Drop.Drop CreateDrop(Board.Board board, BoardData boardData, Tile.Tile tile);
+        protected abstract Drop.Drop CreateDrop(Board.Board board, BoardCreationData boardCreationData, Tile.Tile tile);
     }
     
     public class BoardCreationStrategyData
