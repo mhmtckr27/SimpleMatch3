@@ -150,106 +150,32 @@ namespace SimpleMatch3.Board.Manager
                 data.Task1,
                 data.Task2
             });
-        
-            var anyExplosions = false;
-            var explodedTiles = new HashSet<Tile.Tile>();
-            if (data.Task1.IsCompleted && data.Task1.Result != null)
-            {
-                ExplodeTiles(data.Task1.Result, data.SwipedTile).ForEach(t => explodedTiles.Add(t));
-                anyExplosions = true;
-            }
-            if(data.Task2.IsCompleted && data.Task2.Result != null)
-            {
-                ExplodeTiles(data.Task2.Result, data.OtherTile).ForEach(t => explodedTiles.Add(t));
-                anyExplosions = true;
-            }
+
             
+            var result1 = CheckAndExplodeTiles(new Dictionary<Tile.Tile, Task<List<MatchCoordinateOffsets>>>()
+            {
+                {
+                    data.SwipedTile, data.Task1
+                },
+                {
+                    data.OtherTile, data.Task2
+                },
+                
+                
+            });
+
+            await result1;
+            
+            var anyExplosions = result1.Result.anyExplosions;
+            var explodedTiles = result1.Result.explodedTiles;
+
             if(anyExplosions)
             {
                 data.SwipedTile.SetBusy(false);
                 data.OtherTile.SetBusy(false);
-                var allUpperTiles = _board.GetAllUpperTilesGroupedByColumns(explodedTiles);
-                var drops = new List<Drop.Drop>();
-                foreach (var upperTiles in allUpperTiles)
-                {
-                    var generator = upperTiles.FirstOrDefault(t => t.Data.IsGeneratorTile)?.Data.Generator;
-                    drops = upperTiles.Where(t => !t.IsEmpty()).Select(t => t.Data.CurrentDrop).ToList();
-                    if (generator != null)
-                    {
-                        var generateCount = explodedTiles.Distinct().Count(x => x.Data.Coordinates.x == generator.Data.ColumnIndex);
-                        for (int i = 0; i < generateCount; i++)
-                        {
-                            var drop = generator.GenerateDrop(generator.Data.Position + Vector3.up * Tile.Tile.TileSize * (i + 1) * 2);
-                            drop.CurrentTileCoords = generator.Data.Coords;
-                            drops.Add(drop);
-                        }
-                    }
 
-                    StartCoroutine(_gravityProcessor.ProcessGravityForDrops(drops));
-                }
+                await CheckConsecutiveExplosions(explodedTiles);
 
-                while (!_board.AreDropsStable(drops))
-                    await Task.Delay(500);
-                
-                var tilesToCheck = allUpperTiles.SelectMany(x => x).Concat(explodedTiles).Distinct();
-                var matchTasks = new Dictionary<Tile.Tile, Task<List<MatchCoordinateOffsets>>>();
-                
-                foreach (var tile in tilesToCheck)
-                {
-                    matchTasks.Add(tile, _matchProcessor.ProcessMatches(tile));
-                }
-                
-                if(matchTasks.Count == 0)
-                    return;
-
-                foreach (var task in matchTasks)
-                {
-                    await task.Value;
-                }
-
-                var bestMatchTask = matchTasks.ElementAt(0);
-
-                for(var i = 1; i < matchTasks.Count; i++)
-                {
-                    var currentTask = matchTasks.ElementAt(i);
-                    
-                    if(currentTask.Value.Result == null)
-                        continue;
-                    
-                    if (bestMatchTask.Value.Result == null || currentTask.Value.Result.Count > bestMatchTask.Value.Result.Count)
-                        bestMatchTask = currentTask;
-                }
-
-                //
-                // var bestMatch = matchTasks.Where(t => t.Value.Result != null).Max(pair => pair.Value.Result.Count);
-                // foreach (var matchTask in matchTasks)
-                // {
-                //     matchTask.Value?.Result?.ForEach(x => x.Offsets.ForEach(y => Debug.LogError(x + " : " + (y + matchTask.Key.Data.Coordinates))));
-                // }
-                //
-
-                // foreach (var task in matchTasks)
-                // {
-                ;
-                if(bestMatchTask.Value.Result == null)
-                    return;
-                ;
-                await OnSwipeCompleted(new SwipeCompletedData()
-                {
-                    Task1 = bestMatchTask.Value,
-                    Task2 = bestMatchTask.Value,
-                    OtherTile = bestMatchTask.Key,
-                    SwipedTile = bestMatchTask.Key,
-                    SwipeDirection = data.SwipeDirection,
-                    IsFromSwipe = false
-                });
-
-                await CheckConsecutiveExplosions(bestMatchTask.Value, bestMatchTask.Key);
-                
-                // await Task.Delay(30);
-                // }
-
-                
                 return;
             }
         
@@ -264,20 +190,112 @@ namespace SimpleMatch3.Board.Manager
             data.OtherTile.PlaySwipeAnim(-data.SwipeDirection, data.SwipedTile, () => data.OtherTile.SetBusy(false));
         }
 
-        private async Task CheckConsecutiveExplosions(Task<List<MatchCoordinateOffsets>> task, Tile.Tile tile)
+        private async Task ProcessGravity(List<List<Tile.Tile>> allUpperTiles, HashSet<Tile.Tile> explodedTiles)
         {
-            
+            if(explodedTiles == null)
+                return;
+            var drops = new List<Drop.Drop>();
+            foreach (var upperTiles in allUpperTiles)
+            {
+                var generator = upperTiles.FirstOrDefault(t => t.Data.IsGeneratorTile)?.Data.Generator;
+                drops = upperTiles.Where(t => !t.IsEmpty()).Select(t => t.Data.CurrentDrop).ToList();
+                if (generator != null)
+                {
+                    var generateCount = explodedTiles.Distinct().Count(x => x.Data.Coordinates.x == generator.Data.ColumnIndex);
+                    for (int i = 0; i < generateCount; i++)
+                    {
+                        var drop = generator.GenerateDrop(generator.Data.Position + Vector3.up * Tile.Tile.TileSize * (i + 1) * 2);
+                        drop.CurrentTileCoords = generator.Data.Coords;
+                        drops.Add(drop);
+                    }
+                }
+
+                StartCoroutine(_gravityProcessor.ProcessGravityForDrops(drops));
+            }
+
+            while (!_board.AreDropsStable(drops))
+                await Task.Delay(10);
         }
 
-        private List<Tile.Tile> ExplodeTiles(List<MatchCoordinateOffsets> coordinateOffsetsList, Tile.Tile tile)
+        private async Task CheckConsecutiveExplosions(HashSet<Tile.Tile> explodedTiles)
         {
-            var explodedTiles = new List<Tile.Tile>();
-            foreach (var offset in coordinateOffsetsList.SelectMany(offsets => offsets.Offsets))
+            var allUpperTiles = _board.GetAllUpperTilesGroupedByColumns(explodedTiles);
+            await ProcessGravity(allUpperTiles, explodedTiles);
+            var tilesToCheck = allUpperTiles.SelectMany(x => x).Concat(explodedTiles).Distinct();
+            var matchTasks = new Dictionary<Tile.Tile, Task<List<MatchCoordinateOffsets>>>();
+                
+            foreach (var tile in tilesToCheck)
             {
-                if (!_board.TileExists(tile.Data.Coordinates + offset, out var tileToExplode))
+                matchTasks.Add(tile, _matchProcessor.ProcessMatches(tile));
+            }
+                
+            if(matchTasks.Count == 0)
+                return;
+
+            foreach (var task in matchTasks)
+            {
+                await task.Value;
+            }
+
+            matchTasks = matchTasks.Where(t => t.Value.Result != null).
+            ToDictionary(t => t.Key, t => t.Value);
+
+            // if(!GetBestMatch(matchTasks, out var bestMatchTask))
+            //     return;
+
+            // matchTasks.Remove(bestMatchTask.Key);
+            foreach (var matchTask in matchTasks)
+            {
+                await matchTask.Value;
+            }
+            
+            var result = CheckAndExplodeTiles(matchTasks);
+            await result;
+            if (result.Result.anyExplosions)
+            {
+                await CheckConsecutiveExplosions(result.Result.explodedTiles);
+                await Task.Delay(10);
+            }
+        }
+
+        private async Task<(bool anyExplosions, HashSet<Tile.Tile> explodedTiles)> CheckAndExplodeTiles(
+            Dictionary<Tile.Tile, Task<List<MatchCoordinateOffsets>>> tasks)
+        {
+            var explodedTiles = new HashSet<Tile.Tile>();
+            var coordinates = new List<Vector2Int>();
+
+            foreach (var task in tasks)
+            {
+                if (!task.Value.IsCompleted || task.Value.Result == null) 
                     continue;
 
-                tileToExplode.Explode();
+                coordinates.AddRange(task.Value.Result.SelectMany(x => x.Offsets)
+                    .Select(x => x + task.Key.Data.Coordinates));
+            }
+
+            if (!coordinates.Any()) 
+                return (false, new HashSet<Tile.Tile>());
+            
+            //
+            // while (!_board.AreDropsStable(drops))
+            //     await Task.Delay(500);
+
+            var explodeTask = ExplodeTiles(coordinates);
+            await explodeTask;
+            explodeTask.Result.ForEach(t => explodedTiles.Add(t));
+
+            return (true, explodedTiles);
+        }
+
+        private async Task<List<Tile.Tile>> ExplodeTiles(List<Vector2Int> coordinates)
+        {
+            var explodedTiles = new List<Tile.Tile>();
+            foreach (var coord in coordinates.Distinct())
+            {
+                if (!_board.TileExists(coord, out var tileToExplode))
+                    continue;
+
+                await tileToExplode.Explode();
                 tileToExplode.SetDrop(null);
                 explodedTiles.Add(tileToExplode);
             }

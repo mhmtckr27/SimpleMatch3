@@ -154,7 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilePrefab: {fileID: 7665000754050838652, guid: 3e56573b3baf22f48b5c23ecbaae02dc, type: 3}
   boardCreationData:
-    MinimumMatchAmount: 3
+    MinimumMatchAmount: 2
     RowCount: 8
     ColumnCount: 8
     TilesToSkip: []

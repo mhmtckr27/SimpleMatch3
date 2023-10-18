@@ -33,6 +33,8 @@ namespace SimpleMatch3.Board
             if (!TileExists(startFrom, out var startTile))
                 return false;
             
+            upperTiles.Add(startTile);
+            
             for (var i = 1; i < BoardData.RowCount; i++)
             {
                 if(!TileExists(startFrom + Vector2Int.up * i, out var tile))
@@ -46,6 +48,9 @@ namespace SimpleMatch3.Board
 
         public List<List<Tile.Tile>> GetAllUpperTilesGroupedByColumns(IEnumerable<Tile.Tile> tiles)
         {
+            if (tiles == null)
+                return new List<List<Tile.Tile>>();
+            
             var allUpperTiles = new List<List<Tile.Tile>>();
 
             var groupedByColumnIndices = tiles.Select(t => t.Data.Coordinates).GroupBy(coord => coord.x);
@@ -65,7 +70,7 @@ namespace SimpleMatch3.Board
 
         public bool AreDropsStable(List<Drop.Drop> drops)
         {
-            return drops.All(d => !d.IsFalling);
+            return drops == null || drops.All(d => !d.IsFalling);
         }
     }
 }

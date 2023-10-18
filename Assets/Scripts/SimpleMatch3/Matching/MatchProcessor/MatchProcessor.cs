@@ -20,7 +20,10 @@ namespace SimpleMatch3.Matching.MatchProcessor
             {
                 instantiator.Instantiate<SingleLineMatch3>(),
                 instantiator.Instantiate<SingleLineMatch4>(),
-                instantiator.Instantiate<SingleLineMatch5>()
+                instantiator.Instantiate<SingleLineMatch5>(),
+                instantiator.Instantiate<SingleLineMatch6>(),
+                instantiator.Instantiate<SingleLineMatch7>(),
+                instantiator.Instantiate<SingleLineMatch8>()
             };
             
             _matches.Sort();
@@ -32,7 +35,7 @@ namespace SimpleMatch3.Matching.MatchProcessor
             var foundMatch = false;
             var matches = new List<MatchCoordinateOffsets>();
 
-            await Task.Run(() =>
+            await Task.Run((() =>
             {
                 var tiles = FloodFill(tile);
 
@@ -43,10 +46,10 @@ namespace SimpleMatch3.Matching.MatchProcessor
                 {
                     foundMatch = match.IsMatch(tile, tiles, out participants);
 
-                    if (foundMatch) 
+                    if (foundMatch)
                         matches.Add(participants);
                 }
-            });
+            }));
 
             return !foundMatch ? null : matches;
         }

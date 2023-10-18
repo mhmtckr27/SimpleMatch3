@@ -116,7 +116,6 @@ namespace SimpleMatch3.Drop
 
         private IEnumerator SquashAndStretch_Internal()
         {
-            SetFalling(false);
             var elapsedTime = 0f;
             var totalTime = 0.1f;
             var targetScale = Vector3.one * _defaultScale;
@@ -130,6 +129,7 @@ namespace SimpleMatch3.Drop
                 yield return null;
                 elapsedTime += Time.deltaTime;
             }
+            SetFalling(false);
                 
             elapsedTime = 0;
             startScale = transform.localScale;

@@ -57,9 +57,7 @@ namespace SimpleMatch3.Gravity
             
             drop.ResetSpeed();
             drop.SetFalling(true);
-            
-            Tile.Tile tile = null;
-            
+
             while (true)
             {
                 yield return _coroutineRunner.StartCoroutine(drop.DropTo(targetPosition));
@@ -68,11 +66,11 @@ namespace SimpleMatch3.Gravity
                     yield break;
                 }
                 
-                tile = nextTile;
                 drop.transform.position = targetPosition;
 
-                tile.SetBusy(false);
                 yield return _coroutineRunner.StartCoroutine(drop.SquashAndStretch());
+                yield return new WaitForSeconds(0.05f);
+                nextTile.SetBusy(false);
                 yield break;
             }
         }

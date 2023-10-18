@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using System.Threading.Tasks;
+using DG.Tweening;
 using SimpleMatch3.Extensions;
 using UnityEngine;
 using UnityEngine.Events;
@@ -44,10 +45,21 @@ namespace SimpleMatch3.Tile
             isBusy = busy;
         }
 
-        public void Explode()
+        public async Task Explode()
         {
-            if (!IsEmpty())
-                Data.CurrentDrop.Explode();
+            if (IsEmpty())
+                return;
+            
+            SetBusy(true);
+
+            while (Data.CurrentDrop.IsFalling)
+            {
+                await Task.Delay(20);
+            }
+            
+            SetBusy(false);
+            
+            Data.CurrentDrop.Explode();
         }
     }
 }
