@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using SimpleMatch3.Drop;
 using SimpleMatch3.EventInterfaces;
 using SimpleMatch3.Util;
@@ -7,27 +8,28 @@ using Zenject;
 
 namespace SimpleMatch3.Generator
 {
-    public class Generator
+    public class Generator : IDisposable
     {
-        private readonly GeneratorData _data;
+        public readonly GeneratorData Data;
         private readonly CoroutineRunner _coroutineRunner;
 
         public Generator(GeneratorData data, CoroutineRunner coroutineRunner)
         {
-            _data = data;
+            Data = data;
             _coroutineRunner = coroutineRunner;
             
-            // _data.SignalBus.SubscribeId<ITileExploded.OnExplode>(data.ColumnIndex, OnTilesExploded);
+            // _data.SignalBus.SubscribeId<ITileExploded.OnExplode>(_data.Coordinates, OnTilesExploded);
         }
 
-        private void OnTilesExploded(ITileExploded.OnExplode data)
+        public void Dispose()
         {
-            var drops = new List<Drop.Drop>();
-            for (int i = 0; i < data.Count; i++)
-            {
-                // drops.Add(GenerateDrop(_data.Position));
-            }
+            // _data.SignalBus.UnsubscribeId<ITileExploded.OnExplode>(_data.Coordinates, OnTilesExploded);
         }
+        
+        // private void OnTilesExploded(ITileExploded.OnExplode data)
+        // {
+        //     GenerateDrop(data.Position);
+        // }
 
         // public void Activate()
         // {
@@ -85,11 +87,11 @@ namespace SimpleMatch3.Generator
                 DropColor.Blank
             });
 
-            if (!_data.DropPrefabs.TryGetValue(rand, out var prefab))
+            if (!Data.DropPrefabs.TryGetValue(rand, out var prefab))
                 return null;
 
-            return _data.Instantiator.InstantiatePrefab(prefab,
-                    position, Quaternion.identity, _data.DropsParent)
+            return Data.Instantiator.InstantiatePrefab(prefab,
+                    position, Quaternion.identity, Data.DropsParent)
                 .GetComponent<Drop.Drop>();
         }
     }
@@ -97,11 +99,10 @@ namespace SimpleMatch3.Generator
     public class GeneratorData
     {
         public IInstantiator Instantiator;
-        public SignalBus SignalBus;
         public Dictionary<DropColor, GameObject> DropPrefabs;
         public Transform DropsParent;
         public int ColumnIndex;
-        public Vector2Int Coordinates;
+        public Vector2Int Coords;
         public Vector3 Position;
     }
 }

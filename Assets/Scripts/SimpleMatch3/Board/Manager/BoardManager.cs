@@ -29,12 +29,14 @@ namespace SimpleMatch3.Board.Manager
         private IMatchProcessor _matchProcessor;
         private Board _board;
         private GravityProcessor _gravityProcessor;
+        private Camera _mainCamera;
 
         [Inject]
-        private void Construct(IInstantiator instantiator, SignalBus signalBus)
+        private void Construct(IInstantiator instantiator, SignalBus signalBus, Camera mainCamera)
         {
             _instantiator = instantiator;
             _signalBus = signalBus;
+            _mainCamera = mainCamera;
 
             var tilesParent = CreateTilesParent();
             var dropsParent = CreateDropsParent();
@@ -89,7 +91,7 @@ namespace SimpleMatch3.Board.Manager
 
         private void FitBoardInCamera()
         {
-            Camera.main.orthographicSize = boardCreationData.ColumnCount;
+            _mainCamera.orthographicSize = boardCreationData.ColumnCount;
         }
 
         private void OnSwiped(ISwiped.OnSwiped data)
@@ -123,110 +125,42 @@ namespace SimpleMatch3.Board.Manager
             {
                 Task1 = task1,
                 Task2 = task2,
-                OtherTile = otherTile,
-                SwipeDirection = data.SwipeDirection,
-                SwipedTile = swipedTile
-            };
-
-            var swipeCompletedData2 = new SwipeCompletedData2()
-            {
-                Task = task1,
                 SwipeDirection = data.SwipeDirection,
                 SwipedTile = swipedTile,
                 OtherTile = otherTile,
-                DropCache = otherTile.Data.CurrentDrop
+                IsFromSwipe = true
             };
 
-            var swipeCompletedData3 = new SwipeCompletedData2()
-            {
-                Task = task2,
-                SwipeDirection = -data.SwipeDirection,
-                SwipedTile = otherTile,
-                OtherTile = swipedTile,
-                DropCache = swipedTile.Data.CurrentDrop
-            };
-
-            async void OnCompleteSwipe(SwipeCompletedData2 daata)
-            {
-                var task = CheckMatch(daata);
-                await task;
-                
-                if(task.Result)
-                    return;
-
-                //if both tasks failed, e.g. there is no explosion, move drop to its original position.
-                daata.SwipedTile.SetDrop(daata.DropCache);
-                daata.SwipedTile.PlaySwipeAnim(daata.SwipeDirection, daata.OtherTile, () => daata.SwipedTile.SetBusy(false));
-            }
-
-            swipedTile.PlaySwipeAnim(swipeCompletedData2.SwipeDirection, otherTile, (() => OnCompleteSwipe(swipeCompletedData2)));
-            otherTile.PlaySwipeAnim(swipeCompletedData3.SwipeDirection, swipedTile, () => OnCompleteSwipe(swipeCompletedData3));
+            swipedTile.PlaySwipeAnim(swipeCompletedData.SwipeDirection, otherTile, null);
+            otherTile.PlaySwipeAnim(-swipeCompletedData.SwipeDirection, swipedTile, () => OnSwipeCompleted(swipeCompletedData));
         }
 
-        private async Task<bool> CheckMatch(SwipeCompletedData2 data)
+        private async Task WaitTasks(List<Task> tasks)
         {
-            await data.Task;
-
-            var anyExplosions = false;
-            var explodedTiles = new List<Tile.Tile>();
-            if (data.Task.IsCompleted && data.Task.Result != null)
+            foreach (var task in tasks)
             {
-                explodedTiles.AddRange(ExplodeTiles(data.Task.Result, data.SwipedTile));
-                anyExplosions = true;
+                await task;
             }
-            
-            if(anyExplosions)
-            {
-                data.SwipedTile.SetBusy(false);
-                
-                var allUpperTiles = _board.GetAllUpperTilesGroupedByColumns(explodedTiles);
-                var gravityTasks = new List<Task>();
-                foreach (var upperTiles in allUpperTiles)
-                {
-                    gravityTasks.Add(_gravityProcessor.ProcessGravityFor(upperTiles));
-                }
-
-                Debug.LogError("BURADA 1");
-                foreach (var gravityTask in gravityTasks)
-                {
-                    await gravityTask;
-                }
-                Debug.LogError("BURADA 2");
-
-                // var tilesToCheck = allUpperTiles.SelectMany(x => x).Concat(explodedTiles).Distinct();
-                // var matchTasks = new List<Task>();
-                //
-                // foreach (var tile in tilesToCheck)
-                // {
-                //     matchTasks.Add(_matchProcessor.ProcessMatches(tile));
-                // }
-            }
-
-            return anyExplosions;
-            //
-            // //if both tasks failed, e.g. there is no explosion, move drops to their original position.
-            // var tempDrop = data.SwipedTile.SetDrop(data.OtherTile.Data.CurrentDrop);
-            // data.OtherTile.SetDrop(tempDrop);
-            //
-            // data.SwipedTile.PlaySwipeAnim(data.SwipeDirection, data.OtherTile, () => data.SwipedTile.SetBusy(false));
-            // data.OtherTile.PlaySwipeAnim(-data.SwipeDirection, data.SwipedTile, () => data.OtherTile.SetBusy(false));
         }
         
-        private async void OnSwipeCompleted(SwipeCompletedData data)
+        private async Task OnSwipeCompleted(SwipeCompletedData data)
         {
-            await data.Task1;
-            await data.Task2;
-
+            await WaitTasks(new List<Task>()
+            {
+                data.Task1,
+                data.Task2
+            });
+        
             var anyExplosions = false;
-            var explodedTiles = new List<Tile.Tile>();
+            var explodedTiles = new HashSet<Tile.Tile>();
             if (data.Task1.IsCompleted && data.Task1.Result != null)
             {
-                explodedTiles.AddRange(ExplodeTiles(data.Task1.Result, data.SwipedTile));
+                ExplodeTiles(data.Task1.Result, data.SwipedTile).ForEach(t => explodedTiles.Add(t));
                 anyExplosions = true;
             }
             if(data.Task2.IsCompleted && data.Task2.Result != null)
             {
-                explodedTiles.AddRange(ExplodeTiles(data.Task2.Result, data.OtherTile));
+                ExplodeTiles(data.Task2.Result, data.OtherTile).ForEach(t => explodedTiles.Add(t));
                 anyExplosions = true;
             }
             
@@ -235,38 +169,104 @@ namespace SimpleMatch3.Board.Manager
                 data.SwipedTile.SetBusy(false);
                 data.OtherTile.SetBusy(false);
                 var allUpperTiles = _board.GetAllUpperTilesGroupedByColumns(explodedTiles);
-                var gravityTasks = new List<Task>();
+                var drops = new List<Drop.Drop>();
                 foreach (var upperTiles in allUpperTiles)
                 {
-                    gravityTasks.Add(_gravityProcessor.ProcessGravityFor(upperTiles));
+                    var generator = upperTiles.FirstOrDefault(t => t.Data.IsGeneratorTile)?.Data.Generator;
+                    drops = upperTiles.Where(t => !t.IsEmpty()).Select(t => t.Data.CurrentDrop).ToList();
+                    if (generator != null)
+                    {
+                        var generateCount = explodedTiles.Distinct().Count(x => x.Data.Coordinates.x == generator.Data.ColumnIndex);
+                        for (int i = 0; i < generateCount; i++)
+                        {
+                            var drop = generator.GenerateDrop(generator.Data.Position + Vector3.up * Tile.Tile.TileSize * (i + 1) * 2);
+                            drop.CurrentTileCoords = generator.Data.Coords;
+                            drops.Add(drop);
+                        }
+                    }
+
+                    StartCoroutine(_gravityProcessor.ProcessGravityForDrops(drops));
                 }
 
-                Debug.LogError("BURADA 1");
-                foreach (var gravityTask in gravityTasks)
-                {
-                    await gravityTask;
-                }
-                Debug.LogError("BURADA 2");
-
+                while (!_board.AreDropsStable(drops))
+                    await Task.Delay(500);
+                
                 var tilesToCheck = allUpperTiles.SelectMany(x => x).Concat(explodedTiles).Distinct();
-                var matchTasks = new List<Task>();
+                var matchTasks = new Dictionary<Tile.Tile, Task<List<MatchCoordinateOffsets>>>();
                 
                 foreach (var tile in tilesToCheck)
                 {
-                    matchTasks.Add(_matchProcessor.ProcessMatches(tile));
+                    matchTasks.Add(tile, _matchProcessor.ProcessMatches(tile));
                 }
                 
+                if(matchTasks.Count == 0)
+                    return;
+
+                foreach (var task in matchTasks)
+                {
+                    await task.Value;
+                }
+
+                var bestMatchTask = matchTasks.ElementAt(0);
+
+                for(var i = 1; i < matchTasks.Count; i++)
+                {
+                    var currentTask = matchTasks.ElementAt(i);
+                    
+                    if(currentTask.Value.Result == null)
+                        continue;
+                    
+                    if (bestMatchTask.Value.Result == null || currentTask.Value.Result.Count > bestMatchTask.Value.Result.Count)
+                        bestMatchTask = currentTask;
+                }
+
+                //
+                // var bestMatch = matchTasks.Where(t => t.Value.Result != null).Max(pair => pair.Value.Result.Count);
+                // foreach (var matchTask in matchTasks)
+                // {
+                //     matchTask.Value?.Result?.ForEach(x => x.Offsets.ForEach(y => Debug.LogError(x + " : " + (y + matchTask.Key.Data.Coordinates))));
+                // }
+                //
+
+                // foreach (var task in matchTasks)
+                // {
+                ;
+                if(bestMatchTask.Value.Result == null)
+                    return;
+                ;
+                await OnSwipeCompleted(new SwipeCompletedData()
+                {
+                    Task1 = bestMatchTask.Value,
+                    Task2 = bestMatchTask.Value,
+                    OtherTile = bestMatchTask.Key,
+                    SwipedTile = bestMatchTask.Key,
+                    SwipeDirection = data.SwipeDirection,
+                    IsFromSwipe = false
+                });
+
+                await CheckConsecutiveExplosions(bestMatchTask.Value, bestMatchTask.Key);
                 
+                // await Task.Delay(30);
+                // }
+
                 
                 return;
             }
-
+        
+            if(!data.IsFromSwipe)
+                return;
+            
             //if both tasks failed, e.g. there is no explosion, move drops to their original position.
             var tempDrop = data.SwipedTile.SetDrop(data.OtherTile.Data.CurrentDrop);
             data.OtherTile.SetDrop(tempDrop);
-
+        
             data.SwipedTile.PlaySwipeAnim(data.SwipeDirection, data.OtherTile, () => data.SwipedTile.SetBusy(false));
             data.OtherTile.PlaySwipeAnim(-data.SwipeDirection, data.SwipedTile, () => data.OtherTile.SetBusy(false));
+        }
+
+        private async Task CheckConsecutiveExplosions(Task<List<MatchCoordinateOffsets>> task, Tile.Tile tile)
+        {
+            
         }
 
         private List<Tile.Tile> ExplodeTiles(List<MatchCoordinateOffsets> coordinateOffsetsList, Tile.Tile tile)
@@ -285,7 +285,7 @@ namespace SimpleMatch3.Board.Manager
             return explodedTiles;
         }
     }
-
+    
     public class SwipeCompletedData
     {
         public Vector2Int SwipeDirection;
@@ -293,13 +293,6 @@ namespace SimpleMatch3.Board.Manager
         public Tile.Tile OtherTile;
         public Task<List<MatchCoordinateOffsets>> Task1;
         public Task<List<MatchCoordinateOffsets>> Task2;
-    }
-    public class SwipeCompletedData2
-    {
-        public Vector2Int SwipeDirection;
-        public Tile.Tile SwipedTile;
-        public Tile.Tile OtherTile;
-        public Task<List<MatchCoordinateOffsets>> Task;
-        public Drop.Drop DropCache;
+        public bool IsFromSwipe;
     }
 }

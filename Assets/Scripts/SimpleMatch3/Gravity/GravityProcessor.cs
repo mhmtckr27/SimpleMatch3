@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using DG.Tweening;
-using DG.Tweening.Plugins.Core.PathCore;
-using SimpleMatch3.EventInterfaces;
-using SimpleMatch3.Extensions;
 using SimpleMatch3.Util;
 using UnityEngine;
 using Zenject;
 
 namespace SimpleMatch3.Gravity
 {
-    public class GravityProcessor : IDisposable
+    public class GravityProcessor
     {
         private readonly CoroutineRunner _coroutineRunner;
         private readonly Board.Board _board;
@@ -23,107 +17,63 @@ namespace SimpleMatch3.Gravity
             _board = board;
             _coroutineRunner = coroutineRunner;
             _signalBus = signalBus;
-            
-            // _signalBus.Subscribe<IProcessGravity.ProcessGravityForDrops>(OnProcessGravityForDrops);
         }
-        
-        public void Dispose()
-        {
-            // _signalBus.Unsubscribe<IProcessGravity.ProcessGravityForDrops>(OnProcessGravityForDrops);
-        }
-        
-        // private void OnProcessGravityForDrops(IProcessGravity.ProcessGravityForDrops data)
-        // {
-        //     if(!_board.TileExists(, out var tile))
-        //         return;
-        //
-        //     _coroutineRunner.StartCoroutine(ProcessGravityFor(tile));
-        // }
 
-        public async Task ProcessGravityFor(List<Tile.Tile> tiles)
+        public IEnumerator ProcessGravityForDrops(List<Drop.Drop> drops)
         {
-            var gravityTasks = new List<Task>();
-            foreach (var tile in tiles)
+            foreach (var drop in drops)
             {
-                gravityTasks.Add(ProcessGravityFor(tile));
-                await Task.Delay(30);
+                if(!GetTileToDrop(drop.CurrentTileCoords, out var tileToDrop))
+                    continue;
+
+                if (_board.TileExists(drop.CurrentTileCoords, out var currentTile))
+                    currentTile.SetDrop(null);
                 
-                // if (tile.Data.IsGeneratorTile)
-                // {
-                    // Debug.LogError(tiles.Count);
-                    // for (int i = 0; i < tiles.Count - 1; i++)
-                    // {
-                        // GenerateDropAndProcessGravity(tile);
-                        // yield return new WaitForSeconds(0.03f);
-                    // }
-                // }
+                _coroutineRunner.StartCoroutine(DropToTile(drop, tileToDrop));
+                yield return new WaitForSeconds(0.03f);
             }
-
-            foreach (var gravityTask in gravityTasks)
-            {
-                await gravityTask;
-            }
-            return;
         }
 
-        // private void GenerateDropAndProcessGravity(Tile.Tile tile)
-        // {
-        //     var drop = tile.Data.Generator.GenerateDrop(tile.transform.position + Vector3.up * Tile.Tile.TileSize);
-        //     
-        //     if(drop == null)
-        //         return;
-        //
-        //     _coroutineRunner.StartCoroutine(DropContinuously(drop, tile));
-        //     
-        //     return;
-        // }
-
-        public async Task ProcessGravityFor(Tile.Tile tile)
+        private bool GetTileToDrop(Vector2Int coords, out Tile.Tile tile)
         {
-            if(tile.IsEmpty())
-                return;            
+            //we must get current tile for topmost tile.
+            _board.TileExists(coords, out tile);
             
-            if(!_board.TileExists(tile.Data.Coordinates + Vector2Int.down, out var nextTile) || !nextTile.IsEmpty())
-                return;       
-            
-            var drop = tile.SetDrop(null);
-            
-            if(drop == null)
-                return;
-            
-            await DropContinuously(drop, nextTile);
+            while (_board.TileExists(coords + Vector2Int.down, out var tileCache) && tileCache.IsEmpty())
+            {
+                coords += Vector2Int.down;
+                tile = tileCache;
+            }
+
+            return tile != null;
         }
 
-        private async Task DropContinuously(Drop.Drop drop, Tile.Tile nextTile)
+        private IEnumerator DropToTile(Drop.Drop drop, Tile.Tile nextTile)
         {
             nextTile.SetDrop(drop);
             nextTile.SetBusy(true);
+            
             var targetPosition = nextTile.transform.position;
+            
             drop.ResetSpeed();
             drop.SetFalling(true);
+            
             Tile.Tile tile = null;
+            
             while (true)
             {
-                await drop.DropTo(targetPosition);
+                yield return _coroutineRunner.StartCoroutine(drop.DropTo(targetPosition));
+                if (drop.IsExploded)
+                {
+                    yield break;
+                }
                 
                 tile = nextTile;
-
-                if (_board.TileExists(tile.Data.Coordinates + Vector2Int.down, out nextTile) && nextTile.IsEmpty())
-                {
-                    tile.SetDrop(null);
-                    tile.SetBusy(false);
-                    nextTile.SetDrop(drop);
-                    nextTile.SetBusy(true);
-                    targetPosition = nextTile.transform.position;
-                    continue;
-                }
-
                 drop.transform.position = targetPosition;
 
                 tile.SetBusy(false);
-                await drop.SquashAndStretch();
-                
-                return;
+                yield return _coroutineRunner.StartCoroutine(drop.SquashAndStretch());
+                yield break;
             }
         }
     }

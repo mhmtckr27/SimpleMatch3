@@ -32,10 +32,16 @@ namespace SimpleMatch3.BoardFactory
                         continue;
                     
                     var isGeneratorTile = boardCreationData.GeneratorTiles.Contains(coords);
+                    
                     Generator.Generator generator = null;
                     if (isGeneratorTile)
-                        generator = CreateGenerator(board);
+                        generator = CreateGenerator(coords, Vector3.zero);
+                    
                     var tile = CreateTile(new TileData(coords, isGeneratorTile, generator));
+                    
+                    if (generator != null)
+                        generator.Data.Position = tile.transform.position;
+                    
                     var drop = CreateDrop(board, boardCreationData, tile);
                     
                     
@@ -53,14 +59,16 @@ namespace SimpleMatch3.BoardFactory
             return board;
         }
 
-        private Generator.Generator CreateGenerator(Board.Board board)
+        private Generator.Generator CreateGenerator(Vector2Int coords, Vector3 position)
         {
             var generatorData = new GeneratorData()
             {
                 Instantiator = Data.Instantiator,
-                SignalBus = Data.SignalBus,
                 DropPrefabs = Data.DropPrefabs,
-                DropsParent = Data.DropsParent
+                DropsParent = Data.DropsParent,
+                ColumnIndex = coords.x,
+                Position = position,
+                Coords = coords
             };
             
             return Data.Instantiator.Instantiate<Generator.Generator>(new object[] {generatorData});

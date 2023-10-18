@@ -10,7 +10,6 @@ namespace SimpleMatch3.Zenject
             SignalBusInstaller.Install(Container);
 
             Container.DeclareSignal<ISwiped.OnSwiped>();
-            Container.DeclareSignal<IProcessGravity.ProcessGravityForDrops>();
         }
     }
 }

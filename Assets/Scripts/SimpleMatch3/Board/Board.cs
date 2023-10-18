@@ -44,7 +44,7 @@ namespace SimpleMatch3.Board
             return true;
         }
 
-        public List<List<Tile.Tile>> GetAllUpperTilesGroupedByColumns(List<Tile.Tile> tiles)
+        public List<List<Tile.Tile>> GetAllUpperTilesGroupedByColumns(IEnumerable<Tile.Tile> tiles)
         {
             var allUpperTiles = new List<List<Tile.Tile>>();
 
@@ -61,6 +61,11 @@ namespace SimpleMatch3.Board
             }
 
             return allUpperTiles;
+        }
+
+        public bool AreDropsStable(List<Drop.Drop> drops)
+        {
+            return drops.All(d => !d.IsFalling);
         }
     }
 }

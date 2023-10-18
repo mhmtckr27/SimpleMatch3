@@ -51,7 +51,7 @@ namespace SimpleMatch3.Matching.MatchProcessor
             return !foundMatch ? null : matches;
         }
 
-        private HashSet<Tile.Tile> FloodFill(Tile.Tile tile)
+        public HashSet<Tile.Tile> FloodFill(Tile.Tile tile)
         {
             var tilesQueue = new Queue<Tile.Tile>();
             //used to check if tile is already in queue, I used a separate collection to effectively check in O(1)
@@ -82,7 +82,7 @@ namespace SimpleMatch3.Matching.MatchProcessor
                     if(tilesHashSet.Contains(adjacentTile))
                         continue;
                     
-                    if(adjacentTile.IsEmpty() || tile.Data.CurrentDrop.Color != adjacentTile.Data.CurrentDrop.Color)
+                    if(adjacentTile.IsEmpty() || tile.IsEmpty() || tile.Data.CurrentDrop.Color != adjacentTile.Data.CurrentDrop.Color)
                         continue;
                     
                     tilesQueue.Enqueue(adjacentTile);

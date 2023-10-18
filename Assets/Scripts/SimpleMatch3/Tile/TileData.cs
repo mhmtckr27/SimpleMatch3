@@ -14,7 +14,7 @@ namespace SimpleMatch3.Tile
         public Generator.Generator Generator;
         public Drop.Drop CurrentDrop;
 
-        public TileData(Vector2Int coordinates, bool isGeneratorTile, Generator.Generator generator = null)
+        public TileData(Vector2Int coordinates, bool isGeneratorTile, Generator.Generator generator)
         {
             Coordinates = coordinates;
             IsGeneratorTile = isGeneratorTile;

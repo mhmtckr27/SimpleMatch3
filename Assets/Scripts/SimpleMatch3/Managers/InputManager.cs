@@ -11,62 +11,72 @@ namespace SimpleMatch3.Managers
         [SerializeField] private LayerMask tileLayer;
         [SerializeField] private float swipeThreshold = 1f;
 
-        [SerializeField]private bool _canSwipe;
+        [SerializeField] private bool canSwipe;
+        
         private Vector3 _mouseDownPosition;
         private Vector3 _currentMousePosition;
         private Tile.Tile _mouseDownTile;
         private Vector2Int _swipeDirection = Vector2Int.zero;
         private SignalBus _signalBus;
+        private RaycastHit2D _hit;
+        private Camera _mainCamera;
+        private Vector3 _swipeVector;
+        private Vector3 _swipeVectorAbs;
+        private float _biggerSwipeAxis;
+        private readonly ISwiped.OnSwiped _onSwiped = new();
 
         [Inject]
-        private void Construct(SignalBus signalBus)
+        private void Construct(SignalBus signalBus, Camera mainCamera)
         {
             _signalBus = signalBus;
+            _mainCamera = mainCamera;
         }
         
         private void Awake()
         {
-            _canSwipe = true;
+            canSwipe = true;
         }
 
         private void Update()
         {
+            //must wait for mouse button up to accept input again.
             if (Input.GetMouseButtonUp(0))
-                _canSwipe = true;
+                canSwipe = true;
             
-            if(!_canSwipe)
+            if(!canSwipe)
                 return;
             
+            //mouse button down, cache the tile under mouse.
             if (Input.GetMouseButtonDown(0))
             {
-                _mouseDownPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                var hit = Physics2D.Raycast(_mouseDownPosition, Vector2.zero, 1f,
+                _mouseDownPosition = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
+                _hit = Physics2D.Raycast(_mouseDownPosition, Vector2.zero, 1f,
                     tileLayer);
 
-                if (hit.collider)
-                    _mouseDownTile = hit.collider.GetComponent<Tile.Tile>();
+                _mouseDownTile = _hit.collider ? _hit.collider.GetComponent<Tile.Tile>() : null;
             }
             else if (Input.GetMouseButton(0))
             {
-                _currentMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                var diff = _currentMousePosition - _mouseDownPosition;
-                var diffAbs = diff.Abs();
-                var bigger = Mathf.Max(diffAbs.x, diffAbs.y);
+                _currentMousePosition = _mainCamera.ScreenToWorldPoint(Input.mousePosition);
+                _swipeVector = _currentMousePosition - _mouseDownPosition;
+                _swipeVectorAbs = _swipeVector.Abs();
+                _biggerSwipeAxis = Mathf.Max(_swipeVectorAbs.x, _swipeVectorAbs.y);
                 
-                if(bigger < swipeThreshold)
+                if(_biggerSwipeAxis < swipeThreshold)
                     return;
 
-                //Swiped!
-                _swipeDirection = Vector2.ClampMagnitude(diff.SelectBiggerAxis(), swipeThreshold).CeilToVec2Int();
-
-                _signalBus.TryFire(new ISwiped.OnSwiped()
-                {
-                    InputDownTileCoords = _mouseDownTile.Data.Coordinates,
-                    SwipeDirection = _swipeDirection
-                });
+                if(_mouseDownTile == null)
+                    return;
                 
-                // Debug.LogError("Swipe Direction : " + _swipeDirection);
-                _canSwipe = false;
+                //Swiped!
+                _swipeDirection = Vector2.ClampMagnitude(_swipeVector.SelectBiggerAxis(), swipeThreshold).CeilToVec2Int();
+                
+                _onSwiped.SwipeDirection = _swipeDirection;
+                _onSwiped.InputDownTileCoords = _mouseDownTile.Data.Coordinates;
+                
+                _signalBus.TryFire(_onSwiped);
+                
+                canSwipe = false;
             }
         }
     }
