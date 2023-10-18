@@ -9,6 +9,7 @@ using SimpleMatch3.Drop;
 using SimpleMatch3.EventInterfaces;
 using SimpleMatch3.Gravity;
 using SimpleMatch3.Matching.Data;
+using SimpleMatch3.Matching.Matches;
 using SimpleMatch3.Matching.MatchProcessor;
 using UnityEngine;
 using Zenject;
@@ -152,7 +153,7 @@ namespace SimpleMatch3.Board.Manager
             });
 
             
-            var result1 = CheckAndExplodeTiles(new Dictionary<Tile.Tile, Task<List<MatchCoordinateOffsets>>>()
+            var result1 = CheckAndExplodeTiles(new Dictionary<Tile.Tile, Task<List<(IMatch, MatchCoordinateOffsets)>>>()
             {
                 {
                     data.SwipedTile, data.Task1
@@ -222,7 +223,7 @@ namespace SimpleMatch3.Board.Manager
             var allUpperTiles = _board.GetAllUpperTilesGroupedByColumns(explodedTiles);
             await ProcessGravity(allUpperTiles, explodedTiles);
             var tilesToCheck = allUpperTiles.SelectMany(x => x).Concat(explodedTiles).Distinct();
-            var matchTasks = new Dictionary<Tile.Tile, Task<List<MatchCoordinateOffsets>>>();
+            var matchTasks = new Dictionary<Tile.Tile, Task<List<(IMatch match, MatchCoordinateOffsets)>>>();
                 
             foreach (var tile in tilesToCheck)
             {
@@ -239,11 +240,7 @@ namespace SimpleMatch3.Board.Manager
 
             matchTasks = matchTasks.Where(t => t.Value.Result != null).
             ToDictionary(t => t.Key, t => t.Value);
-
-            // if(!GetBestMatch(matchTasks, out var bestMatchTask))
-            //     return;
-
-            // matchTasks.Remove(bestMatchTask.Key);
+            
             foreach (var matchTask in matchTasks)
             {
                 await matchTask.Value;
@@ -259,7 +256,7 @@ namespace SimpleMatch3.Board.Manager
         }
 
         private async Task<(bool anyExplosions, HashSet<Tile.Tile> explodedTiles)> CheckAndExplodeTiles(
-            Dictionary<Tile.Tile, Task<List<MatchCoordinateOffsets>>> tasks)
+            Dictionary<Tile.Tile, Task<List<(IMatch match, MatchCoordinateOffsets offsets)>>> tasks)
         {
             var explodedTiles = new HashSet<Tile.Tile>();
             var coordinates = new List<Vector2Int>();
@@ -269,7 +266,7 @@ namespace SimpleMatch3.Board.Manager
                 if (!task.Value.IsCompleted || task.Value.Result == null) 
                     continue;
 
-                coordinates.AddRange(task.Value.Result.SelectMany(x => x.Offsets)
+                coordinates.AddRange(task.Value.Result.SelectMany(x => x.offsets.Offsets)
                     .Select(x => x + task.Key.Data.Coordinates));
             }
 
@@ -309,8 +306,8 @@ namespace SimpleMatch3.Board.Manager
         public Vector2Int SwipeDirection;
         public Tile.Tile SwipedTile;
         public Tile.Tile OtherTile;
-        public Task<List<MatchCoordinateOffsets>> Task1;
-        public Task<List<MatchCoordinateOffsets>> Task2;
+        public Task<List<(IMatch, MatchCoordinateOffsets)>> Task1;
+        public Task<List<(IMatch, MatchCoordinateOffsets)>> Task2;
         public bool IsFromSwipe;
     }
 }

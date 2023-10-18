@@ -16,6 +16,7 @@ namespace SimpleMatch3.Matching.MatchProcessor
         public MatchProcessor(IInstantiator instantiator, Board.Board board)
         {
             _board = board;
+            //Expose these to editor to support easily changing possible match patterns.
             _matches = new List<IMatch>()
             {
                 instantiator.Instantiate<SingleLineMatch3>(),
@@ -29,11 +30,11 @@ namespace SimpleMatch3.Matching.MatchProcessor
             _matches.Sort();
         }
         
-        public async Task<List<MatchCoordinateOffsets>> ProcessMatches(Tile.Tile tile)
+        public async Task<List<(IMatch, MatchCoordinateOffsets)>> ProcessMatches(Tile.Tile tile)
         {
             var participants = new MatchCoordinateOffsets();
             var foundMatch = false;
-            var matches = new List<MatchCoordinateOffsets>();
+            var matches = new List<(IMatch, MatchCoordinateOffsets)>();
 
             await Task.Run((() =>
             {
@@ -47,7 +48,7 @@ namespace SimpleMatch3.Matching.MatchProcessor
                     foundMatch = match.IsMatch(tile, tiles, out participants);
 
                     if (foundMatch)
-                        matches.Add(participants);
+                        matches.Add((match, participants));
                 }
             }));
 

@@ -2,21 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a582bd79-73ec-4cd0-883d-a3742ed20c6d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Matching/Matches/SingleLineMatch6.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Matching/Matches/SingleLineMatch6.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Matching/Matches/SingleLineMatch7.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Matching/Matches/SingleLineMatch7.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Matching/Matches/SingleLineMatch8.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Matching/Matches/SingleLineMatch8.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SimpleMatch3/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SimpleMatch3/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Board.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Board.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Manager/BoardManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Manager/BoardManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Drop/Drop.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Drop/Drop.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Gravity/GravityProcessor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Gravity/GravityProcessor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Manager/SimpleMatch3.Board.Manager.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Manager/SimpleMatch3.Board.Manager.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Matching/MatchProcessor/IMatchProcessor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Matching/MatchProcessor/IMatchProcessor.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Matching/MatchProcessor/MatchProcessor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Matching/MatchProcessor/MatchProcessor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Tile/Tile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Tile/Tile.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Zenject/MatchDataInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Zenject/MatchDataInstaller.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +22,7 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/3ea01e77be99618395f448b16bd7cc2bd4248bd9e5d8474964b2d97f39c5d74/System.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Manager/BoardManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/a1efe86478034c12aa24d00c7dc715fe15a000/3d/afb64f6a/Vector2Int.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/fcc0bbf6bf4e430c91d4aa05736fc5c62ac00/4a/6e6344b7/ShortcutExtensions.cs" root0="SKIP_HIGHLIGHTING" />
@@ -65,7 +56,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="XThreadsFramesViewSplitterKey" value="0.4358209" />
+    <property name="XThreadsFramesViewSplitterKey" value="0.22256097" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="rider.run.widget.enabled.cache" value="false" />
     <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
@@ -113,7 +104,7 @@
       <workItem from="1697468511699" duration="23758000" />
       <workItem from="1697555001721" duration="23618000" />
       <workItem from="1697623917244" duration="2941000" />
-      <workItem from="1697641319914" duration="18503000" />
+      <workItem from="1697641319914" duration="19316000" />
     </task>
     <servers />
   </component>
@@ -142,104 +133,104 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Manager/BoardManager.cs</url>
-          <line>154</line>
+          <line>155</line>
           <properties documentPath="C:\GitHub\SimpleMatch3\Assets\Scripts\SimpleMatch3\Board\Manager\BoardManager.cs" initialLine="153" containingFunctionPresentation="method 'OnSwipeCompleted'">
             <startOffsets>
-              <option value="5202" />
+              <option value="5239" />
             </startOffsets>
             <endOffsets>
-              <option value="5533" />
+              <option value="5580" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="19" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Manager/BoardManager.cs</url>
-          <line>171</line>
+          <line>172</line>
           <properties documentPath="C:\GitHub\SimpleMatch3\Assets\Scripts\SimpleMatch3\Board\Manager\BoardManager.cs" initialLine="158" containingFunctionPresentation="method 'OnSwipeCompleted'">
             <startOffsets>
-              <option value="5712" />
+              <option value="5759" />
             </startOffsets>
             <endOffsets>
-              <option value="5729" />
+              <option value="5776" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="20" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Manager/BoardManager.cs</url>
-          <line>168</line>
+          <line>169</line>
           <properties documentPath="C:\GitHub\SimpleMatch3\Assets\Scripts\SimpleMatch3\Board\Manager\BoardManager.cs" initialLine="155" containingFunctionPresentation="method 'OnSwipeCompleted'">
             <startOffsets>
-              <option value="5587" />
+              <option value="5634" />
             </startOffsets>
             <endOffsets>
-              <option value="5635" />
+              <option value="5682" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Manager/BoardManager.cs</url>
-          <line>169</line>
+          <line>170</line>
           <properties documentPath="C:\GitHub\SimpleMatch3\Assets\Scripts\SimpleMatch3\Board\Manager\BoardManager.cs" initialLine="156" containingFunctionPresentation="method 'OnSwipeCompleted'">
             <startOffsets>
-              <option value="5649" />
+              <option value="5696" />
             </startOffsets>
             <endOffsets>
-              <option value="5669" />
+              <option value="5716" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="23" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Manager/BoardManager.cs</url>
-          <line>263</line>
+          <line>260</line>
           <properties documentPath="C:\GitHub\SimpleMatch3\Assets\Scripts\SimpleMatch3\Board\Manager\BoardManager.cs" initialLine="256" containingFunctionPresentation="method 'CheckAndExplodeTiles'">
             <startOffsets>
-              <option value="9461" />
+              <option value="9411" />
             </startOffsets>
             <endOffsets>
-              <option value="9506" />
+              <option value="9456" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Manager/BoardManager.cs</url>
-          <line>291</line>
+          <line>288</line>
           <properties documentPath="C:\GitHub\SimpleMatch3\Assets\Scripts\SimpleMatch3\Board\Manager\BoardManager.cs" initialLine="268" containingFunctionPresentation="method 'ExplodeTiles'">
             <startOffsets>
-              <option value="10422" />
+              <option value="10380" />
             </startOffsets>
             <endOffsets>
-              <option value="10464" />
+              <option value="10422" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="25" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Manager/BoardManager.cs</url>
-          <line>297</line>
+          <line>294</line>
           <properties documentPath="C:\GitHub\SimpleMatch3\Assets\Scripts\SimpleMatch3\Board\Manager\BoardManager.cs" initialLine="274" containingFunctionPresentation="method 'ExplodeTiles'">
             <startOffsets>
-              <option value="10660" />
+              <option value="10618" />
             </startOffsets>
             <endOffsets>
-              <option value="10684" />
+              <option value="10642" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="26" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Manager/BoardManager.cs</url>
-          <line>295</line>
+          <line>292</line>
           <properties documentPath="C:\GitHub\SimpleMatch3\Assets\Scripts\SimpleMatch3\Board\Manager\BoardManager.cs" initialLine="272" containingFunctionPresentation="method 'ExplodeTiles'">
             <startOffsets>
-              <option value="10627" />
+              <option value="10585" />
             </startOffsets>
             <endOffsets>
-              <option value="10636" />
+              <option value="10594" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="27" />
