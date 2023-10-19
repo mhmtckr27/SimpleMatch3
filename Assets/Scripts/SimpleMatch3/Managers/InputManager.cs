@@ -1,5 +1,4 @@
-﻿using System;
-using SimpleMatch3.EventInterfaces;
+﻿using SimpleMatch3.EventInterfaces;
 using SimpleMatch3.Extensions;
 using UnityEngine;
 using Zenject;

@@ -20,9 +20,9 @@ namespace SimpleMatch3.Zenject
             Container.Bind<MatchData>().FromInstance(singleLineMatch3Data).WhenInjectedInto<SingleLineMatch3>();
             Container.Bind<MatchData>().FromInstance(singleLineMatch4Data).WhenInjectedInto<SingleLineMatch4>();
             Container.Bind<MatchData>().FromInstance(singleLineMatch5Data).WhenInjectedInto<SingleLineMatch5>();
-            Container.Bind<MatchData>().FromInstance(singleLineMatch3Data).WhenInjectedInto<SingleLineMatch6>();
-            Container.Bind<MatchData>().FromInstance(singleLineMatch4Data).WhenInjectedInto<SingleLineMatch7>();
-            Container.Bind<MatchData>().FromInstance(singleLineMatch5Data).WhenInjectedInto<SingleLineMatch8>();
+            Container.Bind<MatchData>().FromInstance(singleLineMatch6Data).WhenInjectedInto<SingleLineMatch6>();
+            Container.Bind<MatchData>().FromInstance(singleLineMatch7Data).WhenInjectedInto<SingleLineMatch7>();
+            Container.Bind<MatchData>().FromInstance(singleLineMatch8Data).WhenInjectedInto<SingleLineMatch8>();
         }
     }
 }

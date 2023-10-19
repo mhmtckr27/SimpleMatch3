@@ -98,6 +98,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5480356b98e946969cff7bccc99e8416, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Data:
+    Coordinates: {x: 0, y: 0}
+    IsGeneratorTile: 0
+    CurrentDrop: {fileID: 0}
+  swipeNotAllowedClip: {fileID: 8300000, guid: 4b838e240d227064bbfe923d7b201416, type: 3}
+  swipeClip: {fileID: 8300000, guid: af561a7f7e3bdc74f809f6ddd0429e03, type: 3}
+  isBusy: 0
 --- !u!61 &7212328241307046882
 BoxCollider2D:
   m_ObjectHideFlags: 0

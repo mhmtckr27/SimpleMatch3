@@ -1,9 +1,7 @@
 {
     "name": "SimpleMatch3.EventInterfaces",
     "rootNamespace": "",
-    "references": [
-        "GUID:6f54468eced0e214d977e697d701579d"
-    ],
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

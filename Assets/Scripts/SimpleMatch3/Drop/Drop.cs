@@ -1,16 +1,22 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Threading;
 using System.Threading.Tasks;
 using DG.Tweening;
+using SimpleMatch3.EventInterfaces;
 using SimpleMatch3.Extensions;
+using SimpleMatch3.Pool;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Pool;
+using Zenject;
 
 namespace SimpleMatch3.Drop
 {
     public class Drop : MonoBehaviour
     {
+        [SerializeField] private SpriteRenderer spriteRenderer;
+        [SerializeField] private AudioClip explodeClip;
+        
         public DropColor Color;
         public Vector2Int CurrentTileCoords;
 
@@ -18,27 +24,40 @@ namespace SimpleMatch3.Drop
         private float _scaleModifier;
         private float _speed;
         public bool IsExploded { get; private set; }
-        private CancellationTokenSource _tokenSource;
         private Coroutine _dropCor;
         private Coroutine _squashAndStretchCor;
 
         public bool IsFalling { get; private set; }
+        private ObjectPool<Drop> _parentPool;
+        private ObjectPool<PooledVFX> _vfxPool;
+        private SignalBus _signalBus;
 
+        [Inject]
+        private void Construct(VFXPools vfxPools, SignalBus signalBus)
+        {
+            _signalBus = signalBus;
+            
+            _vfxPool = vfxPools.GetPool(Color);
+        }
+        
         private void Awake()
         {
             _defaultScale = transform.localScale.x;
             ResetSpeed();
-            
-            _tokenSource = new CancellationTokenSource();
-            _tokenSource.Token.ThrowIfCancellationRequested();
         }
 
         private void OnEnable()
         {
             IsExploded = false;
+            spriteRenderer.enabled = true;
         }
 
-        public void Explode()
+        public void SetParentPool(ObjectPool<Drop> parentPool)
+        {
+            _parentPool = parentPool;
+        }
+        
+        public async Task Explode()
         {
             IsExploded = true;
             
@@ -47,8 +66,23 @@ namespace SimpleMatch3.Drop
             
             if (_squashAndStretchCor != null)
                 StopCoroutine(_squashAndStretchCor);
+
+            var canContinue = false;
             
-            Destroy(gameObject);
+            transform.DOScale(Vector3.one * 1.25f, 0.12f).OnComplete(() => canContinue = true);
+
+            while (!canContinue)
+                await Task.Yield();
+
+            spriteRenderer.enabled = false;
+            transform.localScale = Vector3.one * _defaultScale;
+            _vfxPool.Get().Play(transform.position);
+            _signalBus.Fire(new IPlayAudio.OnPlayAudio()
+            {
+                ClipToPlay = explodeClip
+            });
+            await Task.Delay(150);
+            _parentPool.Release(this);
         }
 
         public Drop(DropColor color)
@@ -95,8 +129,8 @@ namespace SimpleMatch3.Drop
             while (true)
             {
                 yield return null;
-                _speed = Mathf.Clamp(_speed + Time.deltaTime * 1f, 0, 0.3f);
-                _scaleModifier = _speed;
+                _speed = Mathf.Clamp(_speed + Time.deltaTime * 1.4f, 0, 0.3f);
+                _scaleModifier = _speed * 0.6f;
                 
                 transform.position = Vector3.MoveTowards(transform.position, targetPosition, _speed);
                 

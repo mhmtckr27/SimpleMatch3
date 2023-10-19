@@ -10,6 +10,8 @@ namespace SimpleMatch3.Zenject
             SignalBusInstaller.Install(Container);
 
             Container.DeclareSignal<ISwiped.OnSwiped>();
+            Container.DeclareSignal<IPlayAudio.OnPlayAudio>();
+            Container.DeclareSignal<IMuteAudio.OnMuteAudio>();
         }
     }
 }

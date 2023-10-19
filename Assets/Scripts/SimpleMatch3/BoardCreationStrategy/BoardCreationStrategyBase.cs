@@ -2,6 +2,7 @@
 using SimpleMatch3.Board.Data;
 using SimpleMatch3.Drop;
 using SimpleMatch3.Generator;
+using SimpleMatch3.Pool;
 using SimpleMatch3.Tile;
 using UnityEngine;
 using Zenject;
@@ -20,18 +21,17 @@ namespace SimpleMatch3.BoardFactory
         public virtual Board.Board CreateBoard(BoardCreationData boardCreationData)
         {
             var board = Data.Instantiator.Instantiate<Board.Board>(new object[] {boardCreationData});
-            var generators = new List<Generator.Generator>();
             
-            for (var colIndex = 0; colIndex < boardCreationData.ColumnCount; colIndex++)
+            for (var colIndex = 0; colIndex < boardCreationData.columnCount; colIndex++)
             {
-                for (var rowIndex = 0; rowIndex < boardCreationData.RowCount; rowIndex++)
+                for (var rowIndex = 0; rowIndex < boardCreationData.rowCount; rowIndex++)
                 {
                     var coords = new Vector2Int(colIndex, rowIndex);
                     
-                    if(boardCreationData.TilesToSkip.Contains(coords))
+                    if(boardCreationData.tilesToSkip.Contains(coords))
                         continue;
                     
-                    var isGeneratorTile = boardCreationData.GeneratorTiles.Contains(coords);
+                    var isGeneratorTile = boardCreationData.generatorTiles.Contains(coords);
                     
                     Generator.Generator generator = null;
                     if (isGeneratorTile)
@@ -43,19 +43,13 @@ namespace SimpleMatch3.BoardFactory
                         generator.Data.Position = tile.transform.position;
                     
                     var drop = CreateDrop(board, boardCreationData, tile);
-                    
-                    
+
                     drop.transform.position = tile.transform.position;
                     tile.SetDrop(drop);
                     board.AddTile(coords, tile);
                 }
             }
 
-            // foreach (var generator in generators)
-            // {
-            //     generator.Activate();
-            // }
-            
             return board;
         }
 
@@ -64,7 +58,7 @@ namespace SimpleMatch3.BoardFactory
             var generatorData = new GeneratorData()
             {
                 Instantiator = Data.Instantiator,
-                DropPrefabs = Data.DropPrefabs,
+                DropPools = Data.DropPools,
                 DropsParent = Data.DropsParent,
                 ColumnIndex = coords.x,
                 Position = position,
@@ -93,6 +87,6 @@ namespace SimpleMatch3.BoardFactory
         public GameObject TilePrefab;
         public Transform TilesParent;
         public Transform DropsParent;
-        public Dictionary<DropColor, GameObject> DropPrefabs;
+        public DropPools DropPools;
     }
 }

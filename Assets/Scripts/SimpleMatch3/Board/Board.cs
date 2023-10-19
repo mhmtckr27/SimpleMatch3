@@ -35,7 +35,7 @@ namespace SimpleMatch3.Board
             
             upperTiles.Add(startTile);
             
-            for (var i = 1; i < BoardData.RowCount; i++)
+            for (var i = 1; i < BoardData.rowCount; i++)
             {
                 if(!TileExists(startFrom + Vector2Int.up * i, out var tile))
                     continue;
@@ -68,9 +68,20 @@ namespace SimpleMatch3.Board
             return allUpperTiles;
         }
 
-        public bool AreDropsStable(List<Drop.Drop> drops)
+        public bool GetNextAvailableLowerTile(Vector2Int coords, out Tile.Tile tile)
         {
-            return drops == null || drops.All(d => !d.IsFalling);
+            TileExists(coords, out tile);
+
+            while ((coords + Vector2Int.down).y != -1) 
+            {
+                if (TileExists(coords + Vector2Int.down, out var tileCache) && tileCache.IsEmpty())
+                {
+                    tile = tileCache;
+                }
+                coords += Vector2Int.down;
+            }
+
+            return tile != null;
         }
     }
 }

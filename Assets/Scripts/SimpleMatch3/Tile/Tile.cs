@@ -1,8 +1,10 @@
 ﻿using System.Threading.Tasks;
 using DG.Tweening;
+using SimpleMatch3.EventInterfaces;
 using SimpleMatch3.Extensions;
 using UnityEngine;
 using UnityEngine.Events;
+using Zenject;
 
 namespace SimpleMatch3.Tile
 {
@@ -10,9 +12,17 @@ namespace SimpleMatch3.Tile
     {
         public static float TileSize;
         public TileData Data;
-
+        [SerializeField] private AudioClip swipeNotAllowedClip;
+        [SerializeField] private AudioClip swipeClip;
         [SerializeField] private bool isBusy;
+        private SignalBus _signalBus;
         public bool IsBusy => isBusy;
+
+        [Inject]
+        private void Construct(SignalBus signalBus)
+        {
+            _signalBus = signalBus;
+        }
 
         public Drop.Drop SetDrop(Drop.Drop newDrop)
         {
@@ -31,6 +41,10 @@ namespace SimpleMatch3.Tile
         {
             SetBusy(true);
             Data.CurrentDrop.transform.DOPunchPosition(toDirection.ToVec3() * 0.2f, 0.2f).OnComplete(() => SetBusy(false));
+            _signalBus.Fire(new IPlayAudio.OnPlayAudio()
+            {
+                ClipToPlay = swipeNotAllowedClip
+            });
         }
 
         public void PlaySwipeAnim(Vector2Int toDirection, Tile toTile, UnityAction onComplete)
@@ -38,6 +52,10 @@ namespace SimpleMatch3.Tile
             SetBusy(true);
             var toPosition = (transform.position + toTile.transform.position) / 2;
             Data.CurrentDrop.PlaySwipeAnim(toDirection, transform.position, toPosition, onComplete);
+            _signalBus.Fire(new IPlayAudio.OnPlayAudio()
+            {
+                ClipToPlay = swipeClip
+            });
         }
 
         public void SetBusy(bool busy)
@@ -57,9 +75,10 @@ namespace SimpleMatch3.Tile
                 await Task.Delay(20);
             }
             
-            SetBusy(false);
+            await Data.CurrentDrop.Explode();
             
-            Data.CurrentDrop.Explode();
+            SetBusy(false);
+            SetDrop(null);
         }
     }
 }

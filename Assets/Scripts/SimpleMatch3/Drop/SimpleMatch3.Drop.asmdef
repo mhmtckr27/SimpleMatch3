@@ -2,7 +2,11 @@
     "name": "SimpleMatch3.Drop",
     "rootNamespace": "",
     "references": [
-        "GUID:c10f946c6cb9eee4aa7e3cebaa72deae"
+        "GUID:0d8beb7f090555447a6cf5ce9e54dbb4",
+        "GUID:236ddf7101864c242a3bf194b23c2d2b",
+        "GUID:c10f946c6cb9eee4aa7e3cebaa72deae",
+        "GUID:5949d5b7026bd374aae5cef2b49ae610",
+        "GUID:723cd755c14263346bef0d94a9b3d0dc"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

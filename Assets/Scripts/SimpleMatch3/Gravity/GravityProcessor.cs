@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using SimpleMatch3.Util;
 using UnityEngine;
 using Zenject;
@@ -23,7 +24,7 @@ namespace SimpleMatch3.Gravity
         {
             foreach (var drop in drops)
             {
-                if(!GetTileToDrop(drop.CurrentTileCoords, out var tileToDrop))
+                if(!_board.GetNextAvailableLowerTile(drop.CurrentTileCoords, out var tileToDrop))
                     continue;
 
                 if (_board.TileExists(drop.CurrentTileCoords, out var currentTile))
@@ -73,6 +74,11 @@ namespace SimpleMatch3.Gravity
                 nextTile.SetBusy(false);
                 yield break;
             }
+        }
+        
+        public bool AreDropsStable(List<Drop.Drop> drops)
+        {
+            return drops == null || drops.All(d => !d.IsFalling);
         }
     }
 }

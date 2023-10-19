@@ -26,15 +26,14 @@ namespace SimpleMatch3.BoardCreationStrategy
             var exclusionList = GetDropColorExclusionList(directions, board, tile);
 
             var color = Helpers.RandomEnum(exclusionList);
-            var foundPrefab = Data.DropPrefabs.TryGetValue(color, out var prefab);
-
-            if (foundPrefab)
+            
+            var drop = Data.DropPools.GetPool(color)?.Get();
+            if (drop != null)
             {
-                var drop = Data.Instantiator.InstantiatePrefab(prefab, Data.DropsParent).GetComponent<Drop.Drop>();
                 drop.CurrentTileCoords = tile.Data.Coordinates;
-                drop.name = $"Drop_{color}";
                 return drop;
-            }            
+            }         
+            
             Debug.LogError($"Could not find drop prefab with given color: {color}");
             return null;
         }
@@ -55,7 +54,7 @@ namespace SimpleMatch3.BoardCreationStrategy
                 var color = nextTile.Data.CurrentDrop.Color;
                 
                 //We already checked the adjacent tile so we start from 2
-                for (var i = 2; i < board.BoardData.MinimumMatchAmount; i++)
+                for (var i = 2; i < board.BoardData.minimumMatchAmount; i++)
                 {
                     if (board.TileExists(currentTile.Data.Coordinates + direction * i, out nextTile) &&
                         nextTile.Data.CurrentDrop.Color == color) 

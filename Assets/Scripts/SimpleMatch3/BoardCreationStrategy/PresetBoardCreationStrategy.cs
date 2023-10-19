@@ -15,7 +15,7 @@ namespace SimpleMatch3.BoardCreationStrategy
         
         protected override Drop.Drop CreateDrop(Board.Board board, BoardCreationData boardCreationData, Tile.Tile tile)
         {
-            var foundColor = boardCreationData.BoardColors.TryGetValue(tile.Data.Coordinates, out var color);
+            var foundColor = boardCreationData.boardColors.TryGetValue(tile.Data.Coordinates, out var color);
 
             if (!foundColor)
             {
@@ -23,16 +23,14 @@ namespace SimpleMatch3.BoardCreationStrategy
                     $"Could not find drop color from board data with given coordinates : {tile.Data.Coordinates}, setting to a random color!");
                 color = Helpers.RandomEnum(new List<DropColor>() {DropColor.Blank});
             }
-            
-            var foundPrefab = Data.DropPrefabs.TryGetValue(color, out var prefab);
 
-            if (foundPrefab)
+            var drop = Data.DropPools.GetPool(color)?.Get();
+            if (drop != null)
             {
-                var drop = Data.Instantiator.InstantiatePrefab(prefab, Data.DropsParent).GetComponent<Drop.Drop>();
-                drop.name = $"Drop_{color}";
                 drop.CurrentTileCoords = tile.Data.Coordinates;
                 return drop;
-            }            
+            }         
+            
             Debug.LogError($"Could not find drop prefab with given color: {color}");
             return null;
         }

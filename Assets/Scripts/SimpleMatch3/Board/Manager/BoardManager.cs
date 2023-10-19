@@ -1,16 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AYellowpaper.SerializedCollections;
 using SimpleMatch3.Board.Data;
 using SimpleMatch3.BoardCreationStrategy;
 using SimpleMatch3.BoardFactory;
-using SimpleMatch3.Drop;
 using SimpleMatch3.EventInterfaces;
 using SimpleMatch3.Gravity;
 using SimpleMatch3.Matching.Data;
 using SimpleMatch3.Matching.Matches;
 using SimpleMatch3.Matching.MatchProcessor;
+using SimpleMatch3.Pool;
 using UnityEngine;
 using Zenject;
 
@@ -19,10 +19,8 @@ namespace SimpleMatch3.Board.Manager
     public class BoardManager : MonoBehaviour
     {
         [SerializeField] private GameObject tilePrefab;
-        [SerializeField] private BoardCreationData boardCreationData;
-
-        [SerializedDictionary("Color", "Prefab")]
-        public SerializedDictionary<DropColor, GameObject> dropPrefabs;
+        [SerializeField] private GameObject boardMask;
+        [field: SerializeField] public BoardCreationData BoardCreationData { get; private set; }
 
         private IInstantiator _instantiator;
         private SignalBus _signalBus;
@@ -33,27 +31,28 @@ namespace SimpleMatch3.Board.Manager
         private Camera _mainCamera;
 
         [Inject]
-        private void Construct(IInstantiator instantiator, SignalBus signalBus, Camera mainCamera)
+        private void Construct(IInstantiator instantiator, SignalBus signalBus, Camera mainCamera, DropPools dropPools)
         {
             _instantiator = instantiator;
             _signalBus = signalBus;
             _mainCamera = mainCamera;
-
-            var tilesParent = CreateTilesParent();
-            var dropsParent = CreateDropsParent();
             
             var strategyData = new BoardCreationStrategyData()
             {
                 Instantiator = _instantiator,
                 SignalBus = _signalBus,
-                DropPrefabs = dropPrefabs,
-                DropsParent = dropsParent,
+                DropPools = dropPools,
+                DropsParent = BoardCreationData.dropsParent,
                 TilePrefab = tilePrefab,
-                TilesParent = tilesParent
+                TilesParent = BoardCreationData.tilesParent
             };
             
-            IBoardCreationStrategy boardCreationStrategy = new RandomBoardCreationStrategy(strategyData);
-            _board = boardCreationStrategy.CreateBoard(boardCreationData);
+            //TODO: Expose to editor (to use which strategy.)
+            IBoardCreationStrategy boardCreationStrategy = BoardCreationData.UsePreset
+                ? new PresetBoardCreationStrategy(strategyData)
+                : new RandomBoardCreationStrategy(strategyData);
+            
+            _board = boardCreationStrategy.CreateBoard(BoardCreationData);
             
             _matchProcessor = _instantiator.Instantiate<MatchProcessor>(new []{ _board });
             _gravityProcessor = _instantiator.Instantiate<GravityProcessor>(new []{ _board });
@@ -65,20 +64,17 @@ namespace SimpleMatch3.Board.Manager
         {
             AdjustBoardPosition();
             FitBoardInCamera();
+            ScaleBoardMask();
         }
 
-        private Transform CreateDropsParent()
+        private void ScaleBoardMask()
         {
-            var dropsParent = new GameObject("Drops").transform;
-            dropsParent.SetParent(transform, false);
-            return dropsParent;
+            boardMask.transform.localScale = new Vector3(BoardCreationData.columnCount, BoardCreationData.rowCount, 1);
         }
 
-        private Transform CreateTilesParent()
+        private void OnDestroy()
         {
-            var tilesParent = new GameObject("Tiles").transform;
-            tilesParent.SetParent(transform, false);
-            return tilesParent;
+            _signalBus.Unsubscribe<ISwiped.OnSwiped>(OnSwiped);
         }
 
         private void AdjustBoardPosition()
@@ -86,15 +82,26 @@ namespace SimpleMatch3.Board.Manager
             var tileBounds = tilePrefab.GetComponent<SpriteRenderer>().bounds;
             var tileSize = tileBounds.extents.x;
             Tile.Tile.TileSize = tileSize;
-            transform.position = new Vector3(-(float) boardCreationData.ColumnCount / 2 + tileSize,
-                -(float) boardCreationData.RowCount / 2 + tileSize);
+            transform.position = new Vector3(-(float) BoardCreationData.columnCount / 2 + tileSize,
+                -(float) BoardCreationData.rowCount / 2 + tileSize);
         }
 
         private void FitBoardInCamera()
         {
-            _mainCamera.orthographicSize = boardCreationData.ColumnCount;
+            float w = Tile.Tile.TileSize * 2 * BoardCreationData.columnCount;
+            float h = Tile.Tile.TileSize * 2 * BoardCreationData.rowCount;
+            float x = w * 0.5f - 0.5f;
+            float y = h * 0.5f - 0.5f;
+
+            _mainCamera.orthographicSize = ((w > h * _mainCamera.aspect)
+                ? w / _mainCamera.pixelWidth * _mainCamera.pixelHeight
+                : h) / 2 + 1;
         }
 
+        /// <summary>
+        /// Called when swipe detected.
+        /// </summary>
+        /// <param name="data"></param>
         private void OnSwiped(ISwiped.OnSwiped data)
         {
             if(!_board.TileExists(data.InputDownTileCoords, out var swipedTile))
@@ -136,6 +143,10 @@ namespace SimpleMatch3.Board.Manager
             otherTile.PlaySwipeAnim(-swipeCompletedData.SwipeDirection, swipedTile, () => OnSwipeCompleted(swipeCompletedData));
         }
 
+        /// <summary>
+        /// Waits for given list of tasks.
+        /// </summary>
+        /// <param name="tasks"></param>
         private async Task WaitTasks(List<Task> tasks)
         {
             foreach (var task in tasks)
@@ -144,6 +155,10 @@ namespace SimpleMatch3.Board.Manager
             }
         }
         
+        /// <summary>
+        /// Called when swipe animation finished.
+        /// </summary>
+        /// <param name="data"></param>
         private async Task OnSwipeCompleted(SwipeCompletedData data)
         {
             await WaitTasks(new List<Task>()
@@ -161,8 +176,6 @@ namespace SimpleMatch3.Board.Manager
                 {
                     data.OtherTile, data.Task2
                 },
-                
-                
             });
 
             await result1;
@@ -191,6 +204,11 @@ namespace SimpleMatch3.Board.Manager
             data.OtherTile.PlaySwipeAnim(-data.SwipeDirection, data.SwipedTile, () => data.OtherTile.SetBusy(false));
         }
 
+        /// <summary>
+        /// Processes gravity for exploded tiles and upper tiles of exploded tiles.
+        /// </summary>
+        /// <param name="allUpperTiles"></param>
+        /// <param name="explodedTiles"></param>
         private async Task ProcessGravity(List<List<Tile.Tile>> allUpperTiles, HashSet<Tile.Tile> explodedTiles)
         {
             if(explodedTiles == null)
@@ -214,10 +232,16 @@ namespace SimpleMatch3.Board.Manager
                 StartCoroutine(_gravityProcessor.ProcessGravityForDrops(drops));
             }
 
-            while (!_board.AreDropsStable(drops))
+            while (!_gravityProcessor.AreDropsStable(drops))
                 await Task.Delay(10);
         }
 
+        /// <summary>
+        /// Called after explosions that are produced from user input (swipe). First waits for gravity task to become stable.
+        /// Then searches for any matches that fallen drops produce. We don't need to
+        /// check the columns other than of explodedTiles' columns for better performance.
+        /// </summary>
+        /// <param name="explodedTiles"></param>
         private async Task CheckConsecutiveExplosions(HashSet<Tile.Tile> explodedTiles)
         {
             var allUpperTiles = _board.GetAllUpperTilesGroupedByColumns(explodedTiles);
@@ -255,6 +279,12 @@ namespace SimpleMatch3.Board.Manager
             }
         }
 
+        /// <summary>
+        /// Checks given matching tasks, and calls ExplodeTiles with actual matches.
+        /// Discards matching tasks that produce no explosions.
+        /// </summary>
+        /// <param name="tasks"></param>
+        /// <returns></returns>
         private async Task<(bool anyExplosions, HashSet<Tile.Tile> explodedTiles)> CheckAndExplodeTiles(
             Dictionary<Tile.Tile, Task<List<(IMatch match, MatchCoordinateOffsets offsets)>>> tasks)
         {
@@ -284,17 +314,28 @@ namespace SimpleMatch3.Board.Manager
             return (true, explodedTiles);
         }
 
+        /// <summary>
+        /// Explodes tiles with given coordinates.
+        /// async because we need to wait drops to become stable (Finish its squash and stretch anim, etc.)
+        /// </summary>
+        /// <param name="coordinates"></param>
+        /// <returns></returns>
         private async Task<List<Tile.Tile>> ExplodeTiles(List<Vector2Int> coordinates)
         {
             var explodedTiles = new List<Tile.Tile>();
+            var explodeTasks = new List<Task>();
             foreach (var coord in coordinates.Distinct())
             {
                 if (!_board.TileExists(coord, out var tileToExplode))
                     continue;
 
-                await tileToExplode.Explode();
-                tileToExplode.SetDrop(null);
+                explodeTasks.Add(tileToExplode.Explode());
                 explodedTiles.Add(tileToExplode);
+            }
+
+            foreach (var explodeTask in explodeTasks)
+            {
+                await explodeTask;
             }
 
             return explodedTiles;
