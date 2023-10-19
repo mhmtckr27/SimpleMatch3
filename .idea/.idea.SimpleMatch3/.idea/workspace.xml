@@ -2,11 +2,88 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a582bd79-73ec-4cd0-883d-a3742ed20c6d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Drop/Data.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/EventInterfaces/IMuteAudio.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/EventInterfaces/IMuteAudio.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/EventInterfaces/IPlayAudio.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/EventInterfaces/IPlayAudio.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Managers/AudioManager.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Managers/AudioManager.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Pool.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/UI.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/UI/FPSButtonToggle.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/UI/FPSButtonToggle.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/UI/FPSText.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/UI/FPSText.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/UI/SoundButtonToggle.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/UI/SoundButtonToggle.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Util/SetTargetFrameRate.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Util/SetTargetFrameRate.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Zenject/BoardCreationDataInstaller.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Zenject/BoardCreationDataInstaller.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Zenject/PoolsInstaller.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Zenject/PoolsInstaller.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SimpleMatch3/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SimpleMatch3/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Sprites/dropB.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Sprites/dropB.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Sprites/dropG.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Sprites/dropG.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Sprites/dropR.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Sprites/dropR.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Sprites/dropY.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Art/Sprites/dropY.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Data/Installers/MatchDataInstaller.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Data/Installers/MatchDataInstaller.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Drop_Blue.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Drop_Blue.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Drop_Green.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Drop_Green.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Drop_Red.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Drop_Red.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Drop_Yellow.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Drop_Yellow.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Tile.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Tile.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Board.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Board.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Data/BoardCreationData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Data/BoardCreationData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Data/SimpleMatch3.Board.Data.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Data/SimpleMatch3.Board.Data.asmdef" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Manager/BoardManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Manager/BoardManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Manager/SimpleMatch3.Board.Manager.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Manager/SimpleMatch3.Board.Manager.asmdef" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Matching/MatchProcessor/IMatchProcessor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Matching/MatchProcessor/IMatchProcessor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Matching/MatchProcessor/MatchProcessor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Matching/MatchProcessor/MatchProcessor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/SimpleMatch3.Board.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/SimpleMatch3.Board.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/BoardCreationStrategy/BoardCreationStrategyBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/BoardCreationStrategy/BoardCreationStrategyBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/BoardCreationStrategy/PresetBoardCreationStrategy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/BoardCreationStrategy/PresetBoardCreationStrategy.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/BoardCreationStrategy/RandomBoardCreationStrategy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/BoardCreationStrategy/RandomBoardCreationStrategy.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/BoardCreationStrategy/SimpleMatch3.BoardCreationStrategy.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/BoardCreationStrategy/SimpleMatch3.BoardCreationStrategy.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Drop/Drop.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Drop/Drop.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Drop/DropColor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Drop/Data/DropColor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Drop/DropColor.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Drop/Data/DropColor.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Drop/SimpleMatch3.Drop.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Drop/SimpleMatch3.Drop.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/EventInterfaces/ITileExploded.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/EventInterfaces/ITileExploded.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/EventInterfaces/SimpleMatch3.EventInterfaces.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/EventInterfaces/SimpleMatch3.EventInterfaces.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Generator/Generator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Generator/Generator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Generator/SimpleMatch3.Generator.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Generator/SimpleMatch3.Generator.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Gravity/GravityProcessor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Gravity/GravityProcessor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Managers.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Managers.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Managers/InputManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Managers/InputManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Matching/MatchProcessor/SimpleMatch3.Matching.Processor.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Matching/MatchProcessor/SimpleMatch3.Matching.Processor.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Tile/SimpleMatch3.Tile.asmdef" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Tile/SimpleMatch3.Tile.asmdef" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Tile/Tile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Tile/Tile.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Util/Editor.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Util/Editor/InspectableTypeDrawer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Util/Editor/InspectableTypeDrawer.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Util/InspectableType.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Util/InspectableType.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Util/SerializedDictionary.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Util/SerializedDictionary.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Zenject/MatchDataInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Zenject/MatchDataInstaller.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Zenject/SignalsInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Zenject/SignalsInstaller.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/QualitySettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/QualitySettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,25 +99,33 @@
     </file-type-list>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/3ea01e77be99618395f448b16bd7cc2bd4248bd9e5d8474964b2d97f39c5d74/System.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Manager/BoardManager.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/a1efe86478034c12aa24d00c7dc715fe15a000/3d/afb64f6a/Vector2Int.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/fcc0bbf6bf4e430c91d4aa05736fc5c62ac00/4a/6e6344b7/ShortcutExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Tile/Tile.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/a1efe86478034c12aa24d00c7dc715fe15a000/e0/584428a8/SetupCoroutine.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d44b17e136d09081da1e8fd0e8c83fde60e11818b9f2442d7ed8cb733fae895e/System.Collections.Generic.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Matching/Data/MatchData.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Matching/MatchProcessor/IMatchProcessor.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Data/BoardCreationData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Pool/VFXPool/PooledVFX.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/EventInterfaces/ISwiped.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Matching/MatchProcessor/MatchProcessor.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6d53f1ee8ee746e4b3c819c68e33f29646ac00/68/ac194dad/AsyncMethodBuilderCore.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/EventInterfaces/IPlayAudio.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/a1efe86478034c12aa24d00c7dc715fe15a000/44/5f2cba73/DictionaryPool`2.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Managers/AudioManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/a1efe86478034c12aa24d00c7dc715fe15a000/b2/6c92b0f2/ObjectPool`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/fcc0bbf6bf4e430c91d4aa05736fc5c62ac00/95/3c41a72a/DOTween.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/3ea01e77be99618395f448b16bd7cc2bd4248bd9e5d8474964b2d97f39c5d74/System.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/a1efe86478034c12aa24d00c7dc715fe15a000/3d/afb64f6a/Vector2Int.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/a1efe86478034c12aa24d00c7dc715fe15a000/e0/584428a8/SetupCoroutine.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d44b17e136d09081da1e8fd0e8c83fde60e11818b9f2442d7ed8cb733fae895e/System.Collections.Generic.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Matching/MatchProcessor/IMatchProcessor.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Data/BoardCreationData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Zenject/SignalsInstaller.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/BoardCreationStrategy/BoardCreationStrategyBase.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Util/SerializedDictionary.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Drop/Drop.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Pool/VFXPool/VFXPools.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/fcc0bbf6bf4e430c91d4aa05736fc5c62ac00/4d/33d293b8/Path.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/fcc0bbf6bf4e430c91d4aa05736fc5c62ac00/30/1157e018/Sequence.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/BoardCreationStrategy/PresetBoardCreationStrategy.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/9384495d2a482ac7341d67ca84e16d267d16c62458a9d67a92b119199a9/System.Threading.Tasks.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/fcc0bbf6bf4e430c91d4aa05736fc5c62ac00/95/3c41a72a/DOTween.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Managers/InputManager.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -73,10 +158,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="11328">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="11328" />
+      <option name="pid" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -105,6 +190,8 @@
       <workItem from="1697555001721" duration="23618000" />
       <workItem from="1697623917244" duration="2941000" />
       <workItem from="1697641319914" duration="19316000" />
+      <workItem from="1697694264169" duration="1111000" />
+      <workItem from="1697726479744" duration="17662000" />
     </task>
     <servers />
   </component>
@@ -133,104 +220,52 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Manager/BoardManager.cs</url>
-          <line>155</line>
-          <properties documentPath="C:\GitHub\SimpleMatch3\Assets\Scripts\SimpleMatch3\Board\Manager\BoardManager.cs" initialLine="153" containingFunctionPresentation="method 'OnSwipeCompleted'">
-            <startOffsets>
-              <option value="5239" />
-            </startOffsets>
-            <endOffsets>
-              <option value="5580" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="19" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Manager/BoardManager.cs</url>
-          <line>172</line>
-          <properties documentPath="C:\GitHub\SimpleMatch3\Assets\Scripts\SimpleMatch3\Board\Manager\BoardManager.cs" initialLine="158" containingFunctionPresentation="method 'OnSwipeCompleted'">
-            <startOffsets>
-              <option value="5759" />
-            </startOffsets>
-            <endOffsets>
-              <option value="5776" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="20" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Manager/BoardManager.cs</url>
-          <line>169</line>
-          <properties documentPath="C:\GitHub\SimpleMatch3\Assets\Scripts\SimpleMatch3\Board\Manager\BoardManager.cs" initialLine="155" containingFunctionPresentation="method 'OnSwipeCompleted'">
-            <startOffsets>
-              <option value="5634" />
-            </startOffsets>
-            <endOffsets>
-              <option value="5682" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="22" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Manager/BoardManager.cs</url>
-          <line>170</line>
-          <properties documentPath="C:\GitHub\SimpleMatch3\Assets\Scripts\SimpleMatch3\Board\Manager\BoardManager.cs" initialLine="156" containingFunctionPresentation="method 'OnSwipeCompleted'">
-            <startOffsets>
-              <option value="5696" />
-            </startOffsets>
-            <endOffsets>
-              <option value="5716" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="23" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Manager/BoardManager.cs</url>
-          <line>260</line>
+          <line>290</line>
           <properties documentPath="C:\GitHub\SimpleMatch3\Assets\Scripts\SimpleMatch3\Board\Manager\BoardManager.cs" initialLine="256" containingFunctionPresentation="method 'CheckAndExplodeTiles'">
             <startOffsets>
-              <option value="9411" />
+              <option value="10959" />
             </startOffsets>
             <endOffsets>
-              <option value="9456" />
+              <option value="11004" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Manager/BoardManager.cs</url>
-          <line>288</line>
+          <line>324</line>
           <properties documentPath="C:\GitHub\SimpleMatch3\Assets\Scripts\SimpleMatch3\Board\Manager\BoardManager.cs" initialLine="268" containingFunctionPresentation="method 'ExplodeTiles'">
             <startOffsets>
-              <option value="10380" />
+              <option value="12211" />
             </startOffsets>
             <endOffsets>
-              <option value="10422" />
+              <option value="12253" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="25" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Manager/BoardManager.cs</url>
-          <line>294</line>
+          <line>331</line>
           <properties documentPath="C:\GitHub\SimpleMatch3\Assets\Scripts\SimpleMatch3\Board\Manager\BoardManager.cs" initialLine="274" containingFunctionPresentation="method 'ExplodeTiles'">
             <startOffsets>
-              <option value="10618" />
+              <option value="12509" />
             </startOffsets>
             <endOffsets>
-              <option value="10642" />
+              <option value="12534" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="26" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/SimpleMatch3/Board/Manager/BoardManager.cs</url>
-          <line>292</line>
+          <line>329</line>
           <properties documentPath="C:\GitHub\SimpleMatch3\Assets\Scripts\SimpleMatch3\Board\Manager\BoardManager.cs" initialLine="272" containingFunctionPresentation="method 'ExplodeTiles'">
             <startOffsets>
-              <option value="10585" />
+              <option value="12465" />
             </startOffsets>
             <endOffsets>
-              <option value="10594" />
+              <option value="12474" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="27" />
